@@ -40,9 +40,7 @@ A Node.js backend server with GraphQL API using Apollo Server and MongoDB integr
 
    For MongoDB Atlas, use:
    ```env
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/lvdb?retryWrites=true&w=majority
-   PORT=8080
-   ```
+  
 
 3. The application will fail fast with a clear error if `MONGODB_URI` is missing.
 
