@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+.terminal-container {
+  min-height: 100vh;
+  background: #0B0F14;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 20px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+.terminal-window {
+  width: 100%;
+  max-width: 900px;
+  background: #1a1a1a;
+  border-radius: 12px 12px 8px 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  margin-left: 0;
+}
+
+.terminal-header {
+  height: 36px;
+  background: #2d2d2d;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid #404040;
+}
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.terminal-button:hover {
+  transform: scale(1.1);
+}
+
+.terminal-button.red {
+  background: #ff5f57;
+}
+
+.terminal-button.yellow {
+  background: #ffbd2e;
+}
+
+.terminal-button.green {
+  background: #28ca42;
+}
+
+.terminal-title {
+  color: #ccc;
+  font-size: 13px;
+  font-weight: 400;
+  flex: 1;
+  text-align: center;
+  margin: 0 80px 0 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.terminal-body {
+  background: #0B0F14;
+  color: #00ff88;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 24px;
+  height: 400px;
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.terminal-line {
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.terminal-input-line {
+  margin-top: 16px;
+}
+
+.terminal-newline {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.terminal-prompt {
+  color: #00ff88;
+  font-weight: 500;
+}
+
+.terminal-path {
+  color: #00aaff;
+  margin-left: 4px;
+}
+
+.terminal-command {
+  color: #ffffff;
+  margin-left: 4px;
+}
+
+.terminal-separator {
+  color: #00ff88;
+  margin: 0 8px;
+  font-weight: bold;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  flex: 1;
+  caret-color: #00ff88;
+  margin-left: 4px;
+  padding: 2px 0;
+}
+
+.terminal-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.terminal-input::selection {
+  background: rgba(0, 255, 136, 0.3);
+}
+
+.terminal-cursor {
+  color: #00ff88;
+  font-weight: bold;
+  opacity: 0;
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+.terminal-cursor.visible {
+  opacity: 1;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Typewriter effect */
+.terminal-line.typewriter {
+  animation: typewriter 2s steps(40, end) 1s both;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Typing effect animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.terminal-line:last-child {
+  animation: typing 1s steps(40, end);
+}
+
+/* Scrollbar styling */
+.terminal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .terminal-container {
+    padding: 10px;
+  }
+
+  .terminal-window {
+    max-width: 100%;
+  }
+
+  .terminal-body {
+    font-size: 14px;
+    padding: 16px;
+    height: 300px;
+  }
+
+  .terminal-title {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .terminal-body {
+    font-size: 12px;
+    padding: 12px;
+    height: 250px;
+  }
+
+  .terminal-header {
+    padding: 8px 12px;
+  }
+
+  .terminal-button {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* Loading animation for navigation */
+.terminal-line:last-child::after {
+  content: '';
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
