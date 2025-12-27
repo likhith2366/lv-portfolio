@@ -15,8 +15,27 @@ function TerminalPage() {
     'Loading portfolio modules...',
     '',
   ]);
+  const [skipNameInput, setSkipNameInput] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
+
+  // Check if username is already cached
+  useEffect(() => {
+    const cachedName = localStorage.getItem('userName');
+    if (cachedName && cachedName !== 'Guest') {
+      setSkipNameInput(true);
+      setLines(prev => [
+        ...prev,
+        `Welcome back, ${cachedName}! 👋`,
+        '',
+        'Navigating to profiles...'
+      ]);
+
+      setTimeout(() => {
+        navigate('/profiles');
+      }, 1500);
+    }
+  }, [navigate]);
 
   // Blinking cursor effect
   useEffect(() => {
@@ -94,29 +113,31 @@ function TerminalPage() {
             </div>
           ))}
 
-          <div className="terminal-input-line">
-            <span className="terminal-prompt">likhith@portfolio</span>
-            <span className="terminal-path"> ~ % </span>
-            <span className="terminal-command">echo "What is your name?"</span>
-            <span className="terminal-separator"> && </span>
-            <span className="terminal-command">read name</span>
-            <div className="terminal-newline">
+          {!skipNameInput && (
+            <div className="terminal-input-line">
               <span className="terminal-prompt">likhith@portfolio</span>
               <span className="terminal-path"> ~ % </span>
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                className="terminal-input"
-                autoComplete="off"
-                spellCheck="false"
-                placeholder="Type your name here..."
-              />
-              <span className={`terminal-cursor ${showCursor ? 'visible' : ''}`}>█</span>
+              <span className="terminal-command">echo "What is your name?"</span>
+              <span className="terminal-separator"> && </span>
+              <span className="terminal-command">read name</span>
+              <div className="terminal-newline">
+                <span className="terminal-prompt">likhith@portfolio</span>
+                <span className="terminal-path"> ~ % </span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  className="terminal-input"
+                  autoComplete="off"
+                  spellCheck="false"
+                  placeholder="Type your name here..."
+                />
+                <span className={`terminal-cursor ${showCursor ? 'visible' : ''}`}>█</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

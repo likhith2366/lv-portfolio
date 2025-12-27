@@ -15,6 +15,7 @@ import {
   ChevronUp,
   Search,
   X,
+  Minimize2,
 } from 'lucide-react';
 import { useMusicPlayer } from '../context/MusicPlayerContext';
 import { useDraggable } from '../hooks/useDraggable';
@@ -58,8 +59,14 @@ function MusicPlayer() {
     return saved === 'true';
   });
 
+  // Local state for minimized mode
+  const [isMinimized, setIsMinimized] = useState(() => {
+    const saved = localStorage.getItem('musicPlayerMinimized');
+    return saved === 'true';
+  });
+
   // Draggable functionality
-  const { position, isDragging, dragHandlers } = useDraggable('musicPlayerPosition', null);
+  const { position, isDragging, hasDragged, dragHandlers } = useDraggable('musicPlayerPosition', null);
 
   // Only show on /profiles page and future pages (not on /, /terminal, /welcome)
   const hiddenPaths = ['/', '/terminal', '/welcome'];
@@ -108,6 +115,18 @@ function MusicPlayer() {
     localStorage.setItem('playlistVisible', newValue.toString());
   };
 
+  // Toggle minimized mode
+  const handleToggleMinimize = () => {
+    const newValue = !isMinimized;
+    setIsMinimized(newValue);
+    localStorage.setItem('musicPlayerMinimized', newValue.toString());
+    // Close playlist when minimizing
+    if (newValue) {
+      setShowPlaylist(false);
+      localStorage.setItem('playlistVisible', 'false');
+    }
+  };
+
   // Handle track click
   const handleTrackClick = (index) => {
     playTrack(index);
@@ -139,6 +158,41 @@ function MusicPlayer() {
 
   if (!shouldShow) return null;
 
+  // Handle click on minimized player (only if not dragging)
+  const handleMinimizedClick = (e) => {
+    // Only expand if we didn't just drag
+    if (!hasDragged) {
+      handleToggleMinimize();
+    }
+  };
+
+  // Minimized floating circle view
+  if (isMinimized) {
+    return (
+      <div
+        className={`music-player-minimized ${isDragging ? 'dragging' : ''}`}
+        style={position ? {
+          position: 'fixed',
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+        } : {}}
+        data-drag-handle
+        {...dragHandlers}
+        onClick={handleMinimizedClick}
+        title="Click to expand music player"
+      >
+        <Music size={24} className="minimized-icon" />
+        {isPlaying && (
+          <div className="playing-indicator">
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div
       className={`music-player ${isDragging ? 'dragging' : ''} ${position ? 'positioned' : ''} ${showPlaylist ? 'expanded' : ''}`}
@@ -160,13 +214,22 @@ function MusicPlayer() {
       >
         <Music size={20} className="music-icon" />
         <span className="now-playing">Now playing</span>
-        <button
-          className={`playlist-toggle-btn ${showPlaylist ? 'active' : ''}`}
-          onClick={handleTogglePlaylist}
-          title={showPlaylist ? 'Hide playlist' : 'Show playlist'}
-        >
-          {showPlaylist ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        </button>
+        <div style={{ display: 'flex', gap: '4px' }}>
+          <button
+            className="minimize-btn"
+            onClick={handleToggleMinimize}
+            title="Minimize player"
+          >
+            <Minimize2 size={14} />
+          </button>
+          <button
+            className={`playlist-toggle-btn ${showPlaylist ? 'active' : ''}`}
+            onClick={handleTogglePlaylist}
+            title={showPlaylist ? 'Hide playlist' : 'Show playlist'}
+          >
+            {showPlaylist ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          </button>
+        </div>
       </div>
 
       {/* Cover Image */}

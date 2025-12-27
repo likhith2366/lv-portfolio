@@ -13,6 +13,7 @@ export function useDraggable(storageKey, defaultPosition = null) {
   });
 
   const [isDragging, setIsDragging] = useState(false);
+  const [hasDragged, setHasDragged] = useState(false);
   const dragStartPos = useRef({ x: 0, y: 0 });
   const elementStartPos = useRef({ x: 0, y: 0 });
 
@@ -32,6 +33,7 @@ export function useDraggable(storageKey, defaultPosition = null) {
     if (!e.target.closest('[data-drag-handle]')) return;
 
     setIsDragging(true);
+    setHasDragged(false);
     dragStartPos.current = { x: e.clientX, y: e.clientY };
     elementStartPos.current = position || { x: 0, y: 0 };
 
@@ -44,6 +46,11 @@ export function useDraggable(storageKey, defaultPosition = null) {
 
       const deltaX = e.clientX - dragStartPos.current.x;
       const deltaY = e.clientY - dragStartPos.current.y;
+
+      // If moved more than 5 pixels, consider it a drag
+      if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
+        setHasDragged(true);
+      }
 
       const newX = elementStartPos.current.x + deltaX;
       const newY = elementStartPos.current.y + deltaY;
@@ -85,6 +92,7 @@ export function useDraggable(storageKey, defaultPosition = null) {
   return {
     position,
     isDragging,
+    hasDragged,
     dragHandlers,
   };
 }

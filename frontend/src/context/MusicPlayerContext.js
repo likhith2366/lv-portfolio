@@ -30,8 +30,9 @@ export function MusicPlayerProvider({ children }) {
     },
     onError: (err) => {
       console.error('❌ GraphQL Query Error:', err);
-      console.error('Unable to connect to backend. Is the server running at http://localhost:8080?');
+      console.error('Unable to connect to backend. Is the server running at http://localhost:5000?');
       console.error('Full error:', err);
+      console.error('GraphQL URI should be:', process.env.REACT_APP_API_URL + '/graphql');
     },
   });
 
@@ -89,6 +90,10 @@ export function MusicPlayerProvider({ children }) {
   const getAudioURL = useCallback((src) => {
     if (!src) return '';
     if (src.startsWith('http')) return src;
+    // Don't prepend API URL for frontend static assets
+    if (src.startsWith('/Assets/')) {
+      return src; // Serve directly from React dev server's public folder
+    }
     if (src.startsWith('/')) {
       return `${process.env.REACT_APP_API_URL || ''}${src}`;
     }
