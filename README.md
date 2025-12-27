@@ -1,6 +1,6 @@
 # Likhith Vardhan's Portfolio
 
-A modern, interactive portfolio website featuring a 3D robot model, music player with GraphQL integration, and Netflix-style animations. Built with React, Node.js, GraphQL, and MongoDB.
+A modern, interactive portfolio website featuring a 3D robot model, music player with GraphQL integration, movie collection, and Netflix-style animations. Built with React, Node.js, GraphQL, and MongoDB.
 
 [![React](https://img.shields.io/badge/React-18.2.0-61dafb?logo=react)](https://reactjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-16+-339933?logo=node.js)](https://nodejs.org/)
@@ -25,13 +25,14 @@ A modern, interactive portfolio website featuring a 3D robot model, music player
 - **🌑 Dark Theme**: Minimal, Grok-inspired aesthetic
 
 ### Backend (Node.js)
-- **GraphQL API**: Apollo Server with Express
+- **GraphQL API**: Express GraphQL with GraphiQL interface
 - **MongoDB Integration**: Mongoose ODM for data persistence
 - **Track Management**: Query tracks with pagination and search
-- **Auto-Seeding**: Default track added on first run
-- **CORS Support**: Configured for cross-origin requests
-- **Static File Serving**: Audio and asset files served from backend
-- **Health Check Endpoint**: `/health` for monitoring
+- **Movie Collection**: Store and retrieve movies with watch status and ratings
+- **Auto-Seeding**: Default track and movies seeded on first run
+- **CORS Support**: Configured for cross-origin requests with credentials
+- **REST & GraphQL**: Dual API support for flexibility
+- **Health Check Endpoint**: `/api/health` for monitoring
 
 ## 🛠️ Tech Stack
 
@@ -45,10 +46,11 @@ A modern, interactive portfolio website featuring a 3D robot model, music player
 
 ### Backend
 - Node.js with Express
-- Apollo Server Express
-- MongoDB with Mongoose
-- GraphQL
+- Express GraphQL 0.12.0
+- GraphQL 15.8.0
+- MongoDB with Mongoose 8.9.3
 - CORS middleware
+- Nodemon (development)
 
 ## 📋 Prerequisites
 
@@ -76,25 +78,27 @@ Create a `.env` file in `backend-node/` directory:
 
 ```env
 # MongoDB Connection
-MONGODB_URI=mongodb://localhost:27017/portfolio
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/portfolio?retryWrites=true&w=majority
 
 # Server Configuration
-PORT=8080
+PORT=5000
 NODE_ENV=development
 ```
 
-**For MongoDB Atlas** (cloud database):
+**For Local MongoDB**:
 ```env
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/portfolio?retryWrites=true&w=majority
+MONGODB_URI=mongodb://localhost:27017/portfolio
 ```
 
 Start the backend server:
 
 ```bash
+npm run dev
+# or for production
 npm start
 ```
 
-✅ Backend will run on `http://localhost:8080`
+✅ Backend will run on `http://localhost:5000`
 
 ### 3. Frontend Setup
 
@@ -106,7 +110,7 @@ npm install
 Create a `.env` file in `frontend/` directory:
 
 ```env
-REACT_APP_API_URL=http://localhost:8080
+REACT_APP_API_URL=http://localhost:5000/api
 ```
 
 Start the frontend development server:
@@ -120,12 +124,13 @@ npm start
 ## 📁 Project Structure
 
 ```
-AI_project2/
+lv_portfolio/
 ├── frontend/
 │   ├── public/
 │   │   ├── Assets/
 │   │   │   ├── LV/              # LV logo for Netflix-style animation
-│   │   │   └── Song/            # Audio files (mp3)
+│   │   │   ├── Song/            # Audio files (mp3)
+│   │   │   └── movies/          # Movie poster images
 │   │   └── models/              # 3D GLTF models
 │   ├── src/
 │   │   ├── components/
@@ -151,13 +156,19 @@ AI_project2/
 ├── backend-node/
 │   ├── src/
 │   │   ├── models/
-│   │   │   └── Track.js         # Mongoose track schema
+│   │   │   ├── Track.js         # Mongoose track schema
+│   │   │   ├── Movie.js         # Mongoose movie schema
+│   │   │   └── Song.js          # Mongoose song schema (legacy)
 │   │   ├── graphql/
-│   │   │   ├── schema.js        # GraphQL type definitions
-│   │   │   └── resolvers.js     # GraphQL resolvers
-│   │   ├── db.js                # MongoDB connection
-│   │   ├── seed.js              # Database seeding logic
-│   │   └── server.js            # Express + Apollo Server setup
+│   │   │   └── schema.js        # GraphQL type definitions & resolvers
+│   │   ├── routes/
+│   │   │   ├── movies.js        # REST API for movies
+│   │   │   └── songs.js         # REST API for songs
+│   │   ├── scripts/
+│   │   │   ├── seedMovies.js    # Seed movies to database
+│   │   │   └── seedSongs.js     # Seed songs to database
+│   │   ├── seed.js              # Auto-seed default track
+│   │   └── server.js            # Express + GraphQL setup
 │   └── package.json
 │
 ├── .gitignore
@@ -196,36 +207,44 @@ AI_project2/
 
 **Frontend** (`frontend/.env`):
 ```env
-REACT_APP_API_URL=http://localhost:8080
+REACT_APP_API_URL=http://localhost:5000/api
 ```
 
 **Backend** (`backend-node/.env`):
 ```env
-MONGODB_URI=mongodb://localhost:27017/portfolio
-PORT=8080
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/portfolio?retryWrites=true&w=majority
+PORT=5000
 NODE_ENV=development
 ```
 
 ### Adding Music Tracks
 
-**Option 1: Via MongoDB directly**
 1. Place audio files in `frontend/public/Assets/Song/`
-2. Insert into MongoDB:
+2. Insert into MongoDB (Track collection):
 
 ```javascript
 {
   title: "Song Title",
   artist: "Artist Name",
-  src: "/Assets/Song/filename.mp3",
+  src: "/Assets/Song/filename.mp3",  // Path served by React dev server
   cover: "/Assets/covers/image.jpg",  // Optional
   durationSeconds: 240,
   tags: ["genre", "mood", "language"]
 }
 ```
 
-**Option 2: Via GraphQL Playground**
-1. Navigate to `http://localhost:8080/graphql`
-2. Use mutations (when implemented) to add tracks
+**Note**: Audio files in `frontend/public/Assets/` are served directly by the React dev server, not the backend.
+
+### Seeding Movies
+
+Run the seed script to populate 55 movies with ratings and watch status:
+
+```bash
+cd backend-node
+npm run seed
+```
+
+Movies use `/Assets/movies/download.jpg` as the default poster image.
 
 ## 🗄️ GraphQL API
 
@@ -235,13 +254,43 @@ NODE_ENV=development
 ```graphql
 query GetTracks($limit: Int, $offset: Int, $search: String) {
   tracks(limit: $limit, offset: $offset, search: $search) {
-    _id
+    id
     title
     artist
     src
     cover
     durationSeconds
     tags
+    createdAt
+  }
+}
+```
+
+**Get single track**:
+```graphql
+query GetTrack($id: ID!) {
+  track(id: $id) {
+    id
+    title
+    artist
+    src
+    cover
+    durationSeconds
+    tags
+    createdAt
+  }
+}
+```
+
+**Get all movies** (with pagination and search):
+```graphql
+query GetMovies($limit: Int, $offset: Int, $search: String, $watched: Boolean) {
+  movies(limit: $limit, offset: $offset, search: $search, watched: $watched) {
+    id
+    title
+    posterUrl
+    imdbRating
+    watched
     createdAt
   }
 }
@@ -252,23 +301,8 @@ query GetTracks($limit: Int, $offset: Int, $search: String) {
 {
   "limit": 20,
   "offset": 0,
-  "search": "telugu"
-}
-```
-
-**Get single track**:
-```graphql
-query GetTrack($id: ID!) {
-  track(id: $id) {
-    _id
-    title
-    artist
-    src
-    cover
-    durationSeconds
-    tags
-    createdAt
-  }
+  "search": "prestige",
+  "watched": true
 }
 ```
 
@@ -276,9 +310,10 @@ query GetTrack($id: ID!) {
 
 | Endpoint | Description |
 |----------|-------------|
-| `http://localhost:8080/graphql` | GraphQL API endpoint |
-| `http://localhost:8080/health` | Health check (returns `{ status: "ok" }`) |
-| `http://localhost:8080/Assets/*` | Static assets (audio, images) |
+| `http://localhost:5000/api/graphql` | GraphQL API endpoint with GraphiQL interface |
+| `http://localhost:5000/api/health` | Health check (returns MongoDB connection status) |
+| `http://localhost:5000/api/movies` | REST API for movies (GET, POST, PUT, DELETE) |
+| `http://localhost:5000/api/songs` | REST API for songs (GET, POST, PUT, DELETE) |
 
 ## 🎨 Customization
 
@@ -329,7 +364,8 @@ mongod
 - ✅ Check audio files exist in `frontend/public/Assets/Song/`
 - ✅ Verify track `src` paths in database start with `/Assets/`
 - ✅ Open browser console and check for errors
-- ✅ Verify backend is serving static files: `http://localhost:8080/Assets/Song/yourfile.mp3`
+- ✅ Audio files are served by React dev server (port 3000), not backend
+- ✅ Ensure `getAudioURL` function doesn't prepend API URL to `/Assets/` paths
 
 ### LV Animation Not Showing
 - ✅ Verify SVG exists at `frontend/public/Assets/LV/LV.svg`
@@ -340,11 +376,16 @@ mongod
 ```bash
 # Check backend logs for detailed error messages
 cd backend-node
-npm start
+npm run dev
 
 # Verify MongoDB connection in logs
-# Test GraphQL endpoint: http://localhost:8080/graphql
+# Test GraphQL endpoint: http://localhost:5000/api/graphql
 ```
+
+### Environment Variables Not Loading
+- React requires a full restart (stop and start, not just refresh) to pick up `.env` changes
+- Environment variables must start with `REACT_APP_` prefix in React
+- Check browser console for debug logs from Apollo Client configuration
 
 ## 📦 Building for Production
 
@@ -400,9 +441,25 @@ This project is open source and available under the [MIT License](LICENSE).
 
 **Likhith Vardhan**
 
-- Portfolio: [Your Portfolio URL]
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
+## 🔑 Key Implementation Details
+
+### Static Asset Serving
+- **Audio files** (`/Assets/Song/*.mp3`) are served by the React dev server from `frontend/public/`
+- **Movie posters** (`/Assets/movies/*.jpg`) are served by the React dev server from `frontend/public/`
+- The backend GraphQL API returns paths like `/Assets/Song/filename.mp3`
+- The frontend `MusicPlayerContext.getAudioURL()` function handles path resolution
+- Paths starting with `/Assets/` are NOT prepended with the API URL
+
+### CORS Configuration
+- Backend allows requests from `http://localhost:3000` with `credentials: 'include'`
+- This specific configuration is required for Apollo Client's credential mode
+- Wildcard `*` origins are not allowed when using credentials
+
+### Database Structure
+- **Track** collection: Music tracks with artist, src, cover, duration, tags
+- **Movie** collection: Movies with title, posterUrl, imdbRating, watched status
+- Auto-seeding runs on server startup for Track collection
+- Manual seeding available via `npm run seed` for Movie collection
 
 ## 🙏 Acknowledgments
 
