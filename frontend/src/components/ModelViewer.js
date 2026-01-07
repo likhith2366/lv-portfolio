@@ -1,6 +1,28 @@
-import React, { Suspense, useRef } from 'react';
+import React, { Suspense, useRef, Component } from 'react';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.warn('WebGL Error caught:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return null; // Don't render anything if WebGL fails
+    }
+    return this.props.children;
+  }
+}
 
 function Model() {
   const gltf = useLoader(GLTFLoader, '/models/genkub_greeting_robot.gltf');
@@ -37,26 +59,28 @@ function Model() {
 
 function ModelViewer() {
   return (
-    <Canvas
-      camera={{ position: [0, 0, 8], fov: 45 }} // Adjusted camera position and FOV
-      style={{
-        background: 'transparent',
-        width: '100%',
-        height: '100%'
-      }}
-    >
-      <Suspense fallback={null}>
-        {/* Enhanced lighting for more colorful appearance */}
-        <ambientLight intensity={0.6} color="#ffffff" />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
-        <directionalLight position={[-5, 5, 5]} intensity={0.8} color="#4a90ff" />
-        <directionalLight position={[5, -5, 5]} intensity={0.6} color="#ff6b6b" />
-        <directionalLight position={[-5, -5, 5]} intensity={0.4} color="#ffd93d" />
-        <pointLight position={[0, 0, 10]} intensity={0.5} color="#00ff88" />
-        <pointLight position={[0, 0, -10]} intensity={0.3} color="#ff0088" />
-        <Model />
-      </Suspense>
-    </Canvas>
+    <ErrorBoundary>
+      <Canvas
+        camera={{ position: [0, 0, 8], fov: 45 }} // Adjusted camera position and FOV
+        style={{
+          background: 'transparent',
+          width: '100%',
+          height: '100%'
+        }}
+      >
+        <Suspense fallback={null}>
+          {/* Enhanced lighting for more colorful appearance */}
+          <ambientLight intensity={0.6} color="#ffffff" />
+          <directionalLight position={[5, 5, 5]} intensity={1.2} color="#ffffff" />
+          <directionalLight position={[-5, 5, 5]} intensity={0.8} color="#4a90ff" />
+          <directionalLight position={[5, -5, 5]} intensity={0.6} color="#ff6b6b" />
+          <directionalLight position={[-5, -5, 5]} intensity={0.4} color="#ffd93d" />
+          <pointLight position={[0, 0, 10]} intensity={0.5} color="#00ff88" />
+          <pointLight position={[0, 0, -10]} intensity={0.3} color="#ff0088" />
+          <Model />
+        </Suspense>
+      </Canvas>
+    </ErrorBoundary>
   );
 }
 

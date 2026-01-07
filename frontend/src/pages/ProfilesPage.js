@@ -12,7 +12,7 @@ function ProfilesPage() {
       description: 'My professional journey, skills, and career highlights',
       avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
       hoverColor: '#e50914',
-      route: null // Coming soon
+      route: '/professional'
     },
     {
       id: 'personal',
@@ -40,8 +40,38 @@ function ProfilesPage() {
         background: '#141414',
         color: 'white',
         fontFamily: 'Arial, sans-serif',
-        padding: '60px 20px'
+        padding: '60px 20px',
+        position: 'relative'
       }}>
+      {/* Admin Button */}
+      <button
+        onClick={() => navigate('/admin/login')}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          padding: '10px 20px',
+          background: 'rgba(255, 255, 255, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          borderRadius: '8px',
+          color: 'white',
+          fontSize: '14px',
+          fontWeight: '600',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          backdropFilter: 'blur(10px)'
+        }}
+        onMouseOver={(e) => {
+          e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+          e.target.style.borderColor = '#6366f1';
+        }}
+        onMouseOut={(e) => {
+          e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+          e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        }}
+      >
+        🔐 Admin
+      </button>
       {/* Centered Container */}
       <div style={{
         maxWidth: '1000px',

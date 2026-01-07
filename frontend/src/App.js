@@ -11,6 +11,9 @@ import OthersLayout from './pages/others/OthersLayout';
 import MoviesPage from './pages/others/MoviesPage';
 import TravelPage from './pages/others/TravelPage';
 import FoodPage from './pages/others/FoodPage';
+import ProfessionalPage from './pages/professional/ProfessionalPage';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -21,6 +24,13 @@ function App() {
           <Route path="/terminal" element={<TerminalPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/profiles" element={<ProfilesPage />} />
+
+          {/* Professional Profile Section */}
+          <Route path="/professional/*" element={<ProfessionalPage />} />
+
+          {/* Admin Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
           {/* Others Section with nested routes */}
           <Route path="/others" element={<OthersLayout />}>

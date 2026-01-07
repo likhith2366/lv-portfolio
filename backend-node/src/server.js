@@ -39,6 +39,16 @@ app.use('/api/graphql', graphqlHTTP({
 // REST Routes
 app.use('/api/movies', require('./routes/movies'));
 app.use('/api/songs', require('./routes/songs'));
+app.use('/api/projects', require('./routes/projects'));
+app.use('/api/contact', require('./routes/contact'));
+app.use('/api/profile', require('./routes/profile'));
+
+// Auth Routes
+const { router: authRouter } = require('./routes/auth');
+app.use('/api/auth', authRouter);
+
+// Admin Routes (protected)
+app.use('/api/admin', require('./routes/admin'));
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -51,4 +61,5 @@ app.listen(PORT, () => {
   console.log(`   - GraphQL: http://localhost:${PORT}/api/graphql`);
   console.log(`   - Movies:  http://localhost:${PORT}/api/movies`);
   console.log(`   - Songs:   http://localhost:${PORT}/api/songs`);
+  console.log(`   - Projects: http://localhost:${PORT}/api/projects`);
 });
