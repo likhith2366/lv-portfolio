@@ -1,245 +1,98 @@
-# Portfolio Backend (Node.js)
+# Portfolio Movies Backend - Node.js
 
-A Node.js backend server with GraphQL API using Apollo Server and MongoDB integration for the portfolio website.
-
-## Features
-
-- GraphQL API with Apollo Server Express
-- MongoDB database integration using Mongoose
-- CORS support for development
-- Environment-based configuration
-- Health check endpoint
-- Fail-fast validation for missing environment variables
+Node.js backend with Express and MongoDB for the portfolio movies feature.
 
 ## Prerequisites
 
-- Node.js 18+
-- MongoDB (local or cloud instance like MongoDB Atlas)
+- Node.js (v14 or higher)
+- MongoDB installed locally OR MongoDB Atlas account
+- npm
 
-## Tech Stack
+## Setup Instructions
 
-- **Express** - Web framework
-- **Apollo Server Express** - GraphQL server
-- **Mongoose** - MongoDB ODM
-- **dotenv** - Environment variable management
-- **cors** - CORS middleware
-- **nodemon** - Development auto-reload
-
-## Environment Setup
-
-1. Copy the environment template:
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Update the `.env` file with your MongoDB connection string:
-   ```env
-   MONGODB_URI=mongodb://localhost:27017/lvdb
-   PORT=8080
-   ```
-
-   For MongoDB Atlas, use:
-   ```env
-  
-
-3. The application will fail fast with a clear error if `MONGODB_URI` is missing.
-
-## Installation
-
-Install dependencies:
+### 1. Install Dependencies
 
 ```bash
+cd backend-node
 npm install
 ```
 
-## Running the Application
+### 2. Configure Environment
 
-### Development mode (with auto-reload):
+Create `.env` file (copy from `.env.example`):
 
 ```bash
-npm run dev
+cp .env.example .env
 ```
 
-### Production mode:
+Edit `.env`:
 
-```bash
-npm start
+**Local MongoDB:**
+```env
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/portfolio
 ```
 
-The server will start on `http://localhost:8080`
+**MongoDB Atlas:**
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/portfolio?retryWrites=true&w=majority
+```
 
-## MongoDB Setup
+**Note:** See [SETUP_MONGODB_ATLAS.md](SETUP_MONGODB_ATLAS.md) for detailed MongoDB Atlas setup instructions.
 
-### Local MongoDB
-
-If using local MongoDB, ensure it's running:
+### 3. Start MongoDB (if local)
 
 ```bash
-# On macOS with Homebrew
+# Windows
+net start MongoDB
+
+# Mac
 brew services start mongodb-community
 
-# On Linux
+# Linux
 sudo systemctl start mongod
-
-# On Windows
-net start MongoDB
 ```
 
-### MongoDB Atlas (Cloud)
+### 4. Seed the Database
 
-1. Create a free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a new cluster
-3. Get your connection string
-4. Replace `username`, `password`, and `cluster` in your `.env` file
-
-## GraphQL API
-
-### Endpoint
-
-- `http://localhost:8080/graphql` - GraphQL endpoint with Apollo Studio (GraphQL Playground)
-
-### Sample Queries
-
-#### Get all tracks:
-
-```graphql
-query {
-  tracks {
-    id
-    title
-    artist
-    src
-    cover
-    durationSeconds
-    tags
-    createdAt
-  }
-}
-```
-
-#### Get a single track:
-
-```graphql
-query {
-  track(id: "track_id_here") {
-    id
-    title
-    artist
-    src
-  }
-}
-```
-
-### Sample Mutations
-
-#### Create a new track:
-
-```graphql
-mutation {
-  createTrack(
-    title: "Song Title"
-    artist: "Artist Name"
-    src: "/music/song.mp3"
-    cover: "/music/cover.jpg"
-    durationSeconds: 240
-    tags: ["pop", "indie"]
-  ) {
-    id
-    title
-    artist
-  }
-}
-```
-
-#### Update a track:
-
-```graphql
-mutation {
-  updateTrack(
-    id: "track_id_here"
-    title: "Updated Title"
-    tags: ["updated", "tag"]
-  ) {
-    id
-    title
-    tags
-  }
-}
-```
-
-#### Delete a track:
-
-```graphql
-mutation {
-  deleteTrack(id: "track_id_here")
-}
-```
-
-## REST Endpoints
-
-### Health Check
-
-- `GET /health` - Returns server status
+Run the seed script to add all 57 movies:
 
 ```bash
-curl http://localhost:8080/health
+npm run seed
 ```
 
-Response:
-```json
-{
-  "status": "ok",
-  "message": "Server is running"
-}
+Output:
+```
+✅ Connected to MongoDB
+🗑️  Cleared existing movies
+✅ Seeded 57 movies successfully!
 ```
 
-## Project Structure
+### 5. Start the Server
 
-```
-backend-node/
-├── src/
-│   ├── models/
-│   │   └── Track.js          # Mongoose Track model
-│   ├── graphql/
-│   │   ├── typeDefs.js       # GraphQL schema definitions
-│   │   └── resolvers.js      # GraphQL resolvers
-│   ├── db.js                 # MongoDB connection
-│   └── server.js             # Main server file
-├── .env.example              # Environment variables template
-├── .gitignore               # Git ignore rules
-├── package.json             # Dependencies and scripts
-└── README.md               # This file
+```bash
+npm run dev    # Development mode
+npm start      # Production mode
 ```
 
-## Track Model Schema
+Server runs on http://localhost:5000
 
-```javascript
-{
-  title: String (required),
-  artist: String (required),
-  src: String (required),        // e.g., /music/song1.mp3
-  cover: String (optional),       // e.g., /music/song1.jpg
-  durationSeconds: Number (optional),
-  tags: [String] (optional),
-  createdAt: Date (auto-generated)
-}
-```
+## API Endpoints
 
-## Development
+**GET /api/movies** - Get all movies (sorted by rating desc)
 
-- The server uses `nodemon` in development mode for auto-reload on file changes
-- GraphQL playground is available at the `/graphql` endpoint for testing queries
-- Environment variables are loaded from `.env` using `dotenv`
-- The application fails fast if `MONGODB_URI` is not set
+**GET /api/movies/:id** - Get single movie
 
-## Error Handling
+**GET /api/health** - Health check
 
-- Database connection failures will exit the application with error code 1
-- Missing required environment variables will exit with a clear error message
-- GraphQL errors are properly formatted and returned in responses
+## Troubleshooting
 
-## Notes
+**MongoDB Connection Error:**
+1. Check if MongoDB is running
+2. Verify `.env` connection string
+3. For Atlas: whitelist IP, check credentials
 
-- The Go backend in `backend/` is kept as a backup and uses PostgreSQL
-- This Node.js backend uses MongoDB and runs on the same port (8080) by default
-- Make sure to stop one backend before starting the other if using the same port
+**Port in Use:**
+Change PORT in `.env` and update frontend REACT_APP_API_URL
+

@@ -3,7 +3,12 @@ import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 // Validate environment variable
 const API_URL = process.env.REACT_APP_API_URL;
 
+console.log('🔍 DEBUG: process.env.REACT_APP_API_URL =', process.env.REACT_APP_API_URL);
+console.log('🔍 DEBUG: All env vars:', Object.keys(process.env).filter(k => k.startsWith('REACT_APP')));
+
 if (!API_URL) {
+  console.error('❌ REACT_APP_API_URL is not defined!');
+  console.error('Environment variables:', process.env);
   throw new Error(
     'REACT_APP_API_URL is not defined. Please check your .env file.'
   );
@@ -11,14 +16,12 @@ if (!API_URL) {
 
 const GRAPHQL_URI = `${API_URL}/graphql`;
 
-// Log GraphQL URI in development mode
-if (process.env.NODE_ENV === 'development') {
-  console.log('\n=== Apollo Client Configuration ===');
-  console.log('GraphQL URI:', GRAPHQL_URI);
-  console.log('REACT_APP_API_URL:', API_URL);
-  console.log('NODE_ENV:', process.env.NODE_ENV);
-  console.log('====================================\n');
-}
+// ALWAYS log GraphQL URI
+console.log('\n=== Apollo Client Configuration ===');
+console.log('GraphQL URI:', GRAPHQL_URI);
+console.log('REACT_APP_API_URL:', API_URL);
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('====================================\n');
 
 const httpLink = new HttpLink({
   uri: GRAPHQL_URI,

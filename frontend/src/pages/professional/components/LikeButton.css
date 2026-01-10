@@ -1,0 +1,310 @@
+.like-button-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  animation: slide-in-bottom 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.like-button-container.liked {
+  animation: slide-out-bottom 0.8s cubic-bezier(0.4, 0, 0.2, 1) 2s forwards;
+}
+
+@keyframes slide-in-bottom {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out-bottom {
+  to {
+    transform: translateY(100px) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.like-card {
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.like-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.like-card:hover::before {
+  opacity: 1;
+}
+
+.like-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.like-text {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.like-emoji {
+  font-size: 1.5rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 0.8;
+  }
+}
+
+.like-text p {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.like-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  border: none;
+  border-radius: 2rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.like-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.like-btn:hover::before {
+  opacity: 1;
+}
+
+.like-btn:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.6);
+}
+
+.like-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.like-btn.liked {
+  background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+  animation: heart-beat 0.8s ease-in-out;
+}
+
+@keyframes heart-beat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1.15);
+  }
+}
+
+.like-icon {
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.like-btn.liked .like-icon {
+  animation: bounce-heart 0.6s ease-in-out;
+}
+
+@keyframes bounce-heart {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+.like-count {
+  font-size: 0.875rem;
+  font-weight: 700;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Particle Animation */
+.like-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ffffff, #ec4899);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  animation: particle-explode 1s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes particle-explode {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(
+      calc(-50% + var(--x, 0px)),
+      calc(-50% + var(--y, 0px))
+    ) scale(1);
+    opacity: 0;
+  }
+}
+
+.particle:nth-child(1) { --x: 40px; --y: -40px; animation-delay: 0s; }
+.particle:nth-child(2) { --x: -40px; --y: -40px; animation-delay: 0.05s; }
+.particle:nth-child(3) { --x: 40px; --y: 40px; animation-delay: 0.1s; }
+.particle:nth-child(4) { --x: -40px; --y: 40px; animation-delay: 0.15s; }
+.particle:nth-child(5) { --x: 50px; --y: 0px; animation-delay: 0.2s; }
+.particle:nth-child(6) { --x: -50px; --y: 0px; animation-delay: 0.25s; }
+.particle:nth-child(7) { --x: 0px; --y: -50px; animation-delay: 0.3s; }
+.particle:nth-child(8) { --x: 0px; --y: 50px; animation-delay: 0.35s; }
+
+/* Thank You Message */
+.thank-you-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 0.75rem;
+  color: #10b981;
+  font-size: 0.875rem;
+  font-weight: 600;
+  animation: fade-in-scale 0.5s ease-out;
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.thank-you-icon {
+  font-size: 1.25rem;
+  animation: rotate-confetti 1s ease-in-out;
+}
+
+@keyframes rotate-confetti {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .like-button-container {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+  }
+
+  .like-card {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .like-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .like-text {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .like-text p {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .like-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .like-card {
+    padding: 1rem;
+  }
+
+  .like-text p {
+    font-size: 0.875rem;
+  }
+
+  .like-btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+}
