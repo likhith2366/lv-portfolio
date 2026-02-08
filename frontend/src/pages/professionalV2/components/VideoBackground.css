@@ -1,0 +1,111 @@
+.video-background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  cursor: pointer;
+  background: #000; /* Fallback background */
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sunset-video {
+  z-index: 1;
+  opacity: 1;
+}
+
+.sea-video {
+  z-index: 2;
+  transition: opacity 1.5s ease-in-out;
+}
+
+.sea-video.opaque {
+  opacity: 1;
+}
+
+.sea-video.transparent {
+  opacity: 0.3;
+}
+
+
+.hero-name {
+  font-size: 6rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -4px;
+  color: white;
+  text-shadow:
+    0 0 15px rgba(255, 255, 255, 1),
+    0 0 30px rgba(255, 255, 255, 0.8),
+    0 0 60px rgba(255, 255, 255, 0.6),
+    0 0 120px rgba(102, 126, 234, 0.5),
+    4px 4px 8px rgba(0, 0, 0, 0.9);
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 40%, #ffffff 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: nameGlow 4s ease-in-out infinite alternate;
+  line-height: 0.9;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin: 1.5rem 0 0 0;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 0.5),
+    2px 2px 4px rgba(0, 0, 0, 0.6);
+  opacity: 0.9;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes nameGlow {
+  0% {
+    text-shadow:
+      0 0 15px rgba(255, 255, 255, 1),
+      0 0 30px rgba(255, 255, 255, 0.8),
+      0 0 60px rgba(255, 255, 255, 0.6),
+      0 0 120px rgba(102, 126, 234, 0.5),
+      4px 4px 8px rgba(0, 0, 0, 0.9);
+  }
+  100% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 1),
+      0 0 40px rgba(255, 255, 255, 0.9),
+      0 0 80px rgba(255, 255, 255, 0.7),
+      0 0 160px rgba(102, 126, 234, 0.6),
+      6px 6px 12px rgba(0, 0, 0, 0.9);
+  }
+}
+

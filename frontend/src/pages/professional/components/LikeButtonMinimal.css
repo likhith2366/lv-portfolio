@@ -1,0 +1,98 @@
+.like-minimal {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  animation: slide-in 0.4s ease;
+}
+
+.like-minimal.liked {
+  animation: fade-out 0.6s ease 1.5s forwards;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+}
+
+.like-btn-minimal {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.like-btn-minimal:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateY(-2px);
+}
+
+.like-btn-minimal:disabled {
+  cursor: default;
+}
+
+.like-minimal.liked .like-btn-minimal {
+  background: linear-gradient(135deg, #ec4899, #f43f5e);
+  border-color: transparent;
+}
+
+.like-icon-minimal {
+  font-size: 1.125rem;
+  transition: transform 0.3s ease;
+}
+
+.like-minimal.liked .like-icon-minimal {
+  animation: heart-pop 0.5s ease;
+}
+
+@keyframes heart-pop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+}
+
+.like-text-minimal {
+  font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  .like-minimal {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .like-btn-minimal {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+
+  .like-icon-minimal {
+    font-size: 1rem;
+  }
+}
