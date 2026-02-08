@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import NavbarV2 from './components/NavbarV2';
 import HomePage from './pages/HomePage';
 import ExperiencePage from './pages/ExperiencePage';
@@ -43,13 +43,7 @@ class ErrorFallback extends React.Component {
 }
 
 const ProfessionalV2Page = () => {
-  const [systemView, setSystemView] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
-
-  const { scrollYProgress } = useScroll();
-  const navOpacity = useTransform(scrollYProgress, [0, 0.1], [0.3, 0.9]);
-  const navBlur = useTransform(scrollYProgress, [0, 0.1], [0, 15]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -63,10 +57,6 @@ const ProfessionalV2Page = () => {
         block: 'start'
       });
     }
-  };
-
-  const handleSectionChange = (section) => {
-    setActiveSection(section);
   };
 
   if (!isLoaded) {
