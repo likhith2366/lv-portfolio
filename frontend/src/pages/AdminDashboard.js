@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 
@@ -18,15 +18,7 @@ function AdminDashboard() {
 
   const token = localStorage.getItem('adminToken');
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/admin/login');
-      return;
-    }
-    loadData();
-  }, [token, navigate]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     try {
       const headers = {
@@ -58,7 +50,15 @@ function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, navigate]);
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/admin/login');
+      return;
+    }
+    loadData();
+  }, [token, navigate, loadData]);
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
