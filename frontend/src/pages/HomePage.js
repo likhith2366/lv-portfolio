@@ -23,7 +23,7 @@ function HomePage() {
     // Navigate to terminal after animation
     setTimeout(() => {
       setLvReveal(null);
-      navigate('/terminal');
+      navigate('/profiles');
     }, 1200);
   };
 

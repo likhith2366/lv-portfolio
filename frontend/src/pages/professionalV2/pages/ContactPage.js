@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as THREE from 'three';
 import './ContactPage.css';
 
 const ContactPage = () => {
+  const navigate = useNavigate();
   const fluidGlassRef = useRef(null);
 
   useEffect(() => {
@@ -88,7 +90,7 @@ const ContactPage = () => {
   }, []);
 
   const handleBackClick = () => {
-    window.location.href = '/professional-v2';
+    navigate('/professional');
   };
 
   return (

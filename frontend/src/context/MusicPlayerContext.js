@@ -30,7 +30,7 @@ export function MusicPlayerProvider({ children }) {
     },
     onError: (err) => {
       console.error('❌ GraphQL Query Error:', err);
-      console.error('Unable to connect to backend. Is the server running at http://localhost:5000?');
+      console.error('Unable to connect to backend. Is the server running at ?');
       console.error('Full error:', err);
       console.error('GraphQL URI should be:', process.env.REACT_APP_API_URL + '/graphql');
     },

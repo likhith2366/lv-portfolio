@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import NavbarV2 from './components/NavbarV2';
 import HomePage from './pages/HomePage';
@@ -43,6 +44,7 @@ class ErrorFallback extends React.Component {
 }
 
 const ProfessionalV2Page = () => {
+  const navigate = useNavigate();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -213,7 +215,7 @@ const ProfessionalV2Page = () => {
         <AboutFooter />
 
         {/* 3D Connect Button */}
-        <ConnectButton3D onClick={() => window.location.href = '/professional-v2/contact'} />
+        <ConnectButton3D onClick={() => navigate('/professional/contact')} />
       </div>
     </ErrorFallback>
   );

@@ -10,7 +10,7 @@ const HomeRedesigned = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profileRes = await fetch('http://localhost:5000/api/profile');
+        const profileRes = await fetch('/api/profile');
         const profileData = await profileRes.json();
         setProfile(profileData);
       } catch (error) {

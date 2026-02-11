@@ -88,7 +88,7 @@ const ContactPage = () => {
   }, []);
 
   const handleBackClick = () => {
-    window.location.href = '/professional-v2';
+    window.location.href = '/professional';
   };
 
   return (

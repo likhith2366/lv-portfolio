@@ -18,7 +18,7 @@ function NavigationNew() {
     { path: '/professional', label: 'Home', exact: true },
     { path: '/professional/experience', label: 'Experience' },
     { path: '/professional/projects', label: 'Projects' },
-    { path: '/professional/contact', label: 'Contact' },
+    { path: '/professional/contact', label: 'Connect' },
   ];
 
   const isActive = (path, exact) => {
