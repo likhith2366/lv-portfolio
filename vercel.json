@@ -2,22 +2,14 @@
   "version": 2,
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/build",
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "backend-node/src/server.js"
+      "source": "/api/(.*)",
+      "destination": "/api"
     },
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!api).*)",
+      "destination": "/index.html"
     }
-  ],
-  "functions": {
-    "backend-node/src/server.js": {
-      "includeFiles": "backend-node/**"
-    }
-  }
+  ]
 }
