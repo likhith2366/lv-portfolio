@@ -1,30 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ModelViewer from '../components/ModelViewer';
-import LVReveal from '../components/LVReveal';
 
 function HomePage() {
   const name = "Likhith Vardhan";
   const [snowMode, setSnowMode] = useState(false);
   const [snowParticles, setSnowParticles] = useState([]);
   const [snowAccumulation, setSnowAccumulation] = useState(0);
-  const [lvReveal, setLvReveal] = useState(null);
   const navigate = useNavigate();
 
-  const handleDoubleClick = (e) => {
-    e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    console.log('Double-click detected! Position:', { x, y });
-    setLvReveal({ x, y });
-
-    // Navigate to terminal after animation
-    setTimeout(() => {
-      setLvReveal(null);
-      navigate('/profiles');
-    }, 1200);
+  const handleStart = () => {
+    navigate('/profiles');
   };
 
   const toggleSnowMode = (e) => {
@@ -64,11 +50,7 @@ function HomePage() {
   }, [snowMode]);
 
   return (
-    <div
-      className="App"
-      onDoubleClick={handleDoubleClick}
-      style={{ cursor: 'pointer' }}
-    >
+    <div className="App">
       {/* Snow Button */}
       <button
         className={`snow-toggle ${snowMode ? 'active' : ''}`}
@@ -77,9 +59,6 @@ function HomePage() {
       >
         ❄️ Snow
       </button>
-
-      {/* LV Reveal Animation */}
-      {lvReveal && <LVReveal x={lvReveal.x} y={lvReveal.y} />}
 
       {/* Snow Particles */}
       {snowMode && (
@@ -124,6 +103,11 @@ function HomePage() {
           </span>
         ))}
       </h1>
+
+      {/* Start Button */}
+      <button className="start-button" onClick={handleStart}>
+        Start
+      </button>
 
       <div className="model-viewer">
         <ModelViewer />
