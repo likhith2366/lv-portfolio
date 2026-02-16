@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import NavbarV2 from './components/NavbarV2';
 import ScrollyCanvas from './components/ScrollyCanvas';
 import ReelCarousel from './components/ReelCarousel';
+import ShowcaseCarousel from './components/ShowcaseCarousel';
+import Carousel3D from './components/Carousel3D';
 import ConnectButton3D from './components/ConnectButton3D';
 import AboutFooter from './components/AboutFooter';
 
@@ -69,7 +71,7 @@ if (!isLoaded) {
       <div className="professional-v2-container">
         <NavbarV2 />
 
-        {/* Hero Video Section - Clean Sea Video */}
+        {/* Hero Video Section */}
         <section className="hero-video-section" id="hero">
           <video
             autoPlay
@@ -90,6 +92,12 @@ if (!isLoaded) {
 
         {/* Tech Stack Reel Carousel */}
         <ReelCarousel />
+
+        {/* Showcase Carousel */}
+        <ShowcaseCarousel />
+
+        {/* 3D Project Carousel */}
+        <Carousel3D />
 
         {/* About Footer Section */}
         <AboutFooter />

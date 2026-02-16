@@ -1,0 +1,168 @@
+.c3d-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+  padding: 60px 20px;
+}
+
+.c3d-heading {
+  text-align: center;
+  margin-bottom: 50px;
+  z-index: 2;
+}
+
+.c3d-label {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px;
+}
+
+.c3d-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+/* 3D viewport */
+.c3d-viewport {
+  width: 100%;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
+
+/* Rotating ring — no width/height, just a 3D anchor point */
+.c3d-carousel {
+  position: relative;
+  width: 200px;
+  height: 140px;
+  transform-style: preserve-3d;
+}
+
+/* Each card */
+.c3d-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 140px;
+  margin-left: -100px;
+  margin-top: -70px;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  backface-visibility: visible;
+  transition: box-shadow 0.3s ease;
+}
+
+.c3d-item:hover {
+  box-shadow: 0 12px 45px rgba(255, 107, 53, 0.3);
+}
+
+.c3d-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.c3d-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    transparent 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  padding: 12px 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.c3d-item:hover .c3d-item-overlay {
+  opacity: 1;
+}
+
+.c3d-item-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.c3d-hint {
+  margin-top: 36px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .c3d-section {
+    min-height: auto;
+    padding: 40px 20px;
+  }
+
+  .c3d-viewport {
+    height: 320px;
+    perspective: 800px;
+  }
+
+  .c3d-carousel {
+    width: 160px;
+    height: 110px;
+  }
+
+  .c3d-item {
+    width: 160px;
+    height: 110px;
+    margin-left: -80px;
+    margin-top: -55px;
+  }
+
+  .c3d-title {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .c3d-viewport {
+    height: 260px;
+    perspective: 600px;
+  }
+
+  .c3d-carousel {
+    width: 130px;
+    height: 90px;
+  }
+
+  .c3d-item {
+    width: 130px;
+    height: 90px;
+    margin-left: -65px;
+    margin-top: -45px;
+    border-radius: 10px;
+  }
+}
