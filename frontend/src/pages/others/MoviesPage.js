@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const DEFAULT_POSTER = 'https://via.placeholder.com/300x450/1a1a1a/666666?text=No+Poster';
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || '/api';
 
 function MoviesPage() {
   const [movies, setMovies] = useState([]);

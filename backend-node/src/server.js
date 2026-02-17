@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware - Configure CORS to allow credentials
 app.use(cors({
-  origin: 'http://localhost:3000', // Allow requests from frontend
+  origin: true, // Allow all origins in production (Vercel handles this)
   credentials: true, // Allow cookies/credentials
 }));
 app.use(express.json());
@@ -55,11 +55,17 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'Server is running', mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-  console.log(`📡 API endpoints:`);
-  console.log(`   - GraphQL: http://localhost:${PORT}/api/graphql`);
-  console.log(`   - Movies:  http://localhost:${PORT}/api/movies`);
-  console.log(`   - Songs:   http://localhost:${PORT}/api/songs`);
-  console.log(`   - Projects: http://localhost:${PORT}/api/projects`);
-});
+// Only start server in development, not in Vercel serverless
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`📡 API endpoints:`);
+    console.log(`   - GraphQL: http://localhost:${PORT}/api/graphql`);
+    console.log(`   - Movies:  http://localhost:${PORT}/api/movies`);
+    console.log(`   - Songs:   http://localhost:${PORT}/api/songs`);
+    console.log(`   - Projects: http://localhost:${PORT}/api/projects`);
+  });
+}
+
+// Export for Vercel serverless
+module.exports = app;

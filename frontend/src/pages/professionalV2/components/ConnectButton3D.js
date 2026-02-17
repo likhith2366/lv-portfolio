@@ -54,7 +54,7 @@ const ConnectButton3D = ({ onClick }) => {
     });
 
     // Torus Knot for that "liquid" complex look
-    const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 128, 32);
+    const geometry = new THREE.TorusKnotGeometry(0.95, 0.32, 128, 32);
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 

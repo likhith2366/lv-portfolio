@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+import HomePage from './pages/HomePage';
 import ProfilesPage from './pages/ProfilesPage';
 import WelcomePage from './pages/WelcomePage';
 import MusicPlayer from './components/MusicPlayer';
@@ -10,8 +11,6 @@ import MoviesPage from './pages/others/MoviesPage';
 import TravelPage from './pages/others/TravelPage';
 import FoodPage from './pages/others/FoodPage';
 import ProfessionalPage from './pages/professional/ProfessionalPage';
-import ProfessionalV2Page from './pages/professionalV2/ProfessionalV2Page';
-import ContactPage from './pages/professionalV2/pages/ContactPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
@@ -20,17 +19,12 @@ function App() {
     <Router>
       <MusicPlayerProvider>
         <Routes>
-          <Route path="/" element={<Navigate to="/profiles" replace />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/profiles" element={<ProfilesPage />} />
 
           {/* Professional Profile Section */}
           <Route path="/professional/*" element={<ProfessionalPage />} />
-          <Route path="/professional-v2" element={<ProfessionalV2Page />} />
-          <Route path="/professional-v2/contact" element={<ContactPage />} />
-
-          {/* Quick access to new professional page */}
-          <Route path="/new-portfolio" element={<ProfessionalV2Page />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />

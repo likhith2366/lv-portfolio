@@ -26,7 +26,7 @@ const AboutFooter = () => {
       </div>
 
       <div className="footer-profile-image-container">
-        <img src="/Assets/personal_footer_portrait.png" alt="Likhith Vardhan" />
+        <img src="/Assets/profile_silhouette.png" alt="Likhith Vardhan" />
       </div>
 
       <div className="footer-about-details footer-about-right">
@@ -45,7 +45,7 @@ const AboutFooter = () => {
         </ul>
 
         <h3>Contact</h3>
-        <p>Visit the <span className="contact-link" onClick={() => window.location.href = '/professional-v2/contact'}>Connect page</span></p>
+        <p>Visit the <span className="contact-link" onClick={() => window.location.href = '/professional/contact'}>Connect page</span></p>
 
         <h3>Interests</h3>
         <p>Innovation, Technology, Design</p>

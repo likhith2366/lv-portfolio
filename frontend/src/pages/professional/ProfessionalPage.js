@@ -10,6 +10,7 @@ import ResumePage from './pages/Resume';
 import ContactPage from './pages/ContactPage';
 import LikeButton from './components/LikeButtonMinimal';
 import ConnectButton3D from './components/ConnectButton3D';
+import AboutFooter from '../professionalV2/components/AboutFooter';
 import './professional.css';
 
 function ProfessionalPage() {
@@ -31,6 +32,8 @@ function ProfessionalPage() {
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </main>
+
+      {!isContactPage && <AboutFooter />}
 
       <LikeButton />
       {!isContactPage && <ConnectButton3D onClick={() => window.location.href = '/professional/contact'} />}

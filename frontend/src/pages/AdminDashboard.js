@@ -27,12 +27,12 @@ function AdminDashboard() {
       };
 
       const [profileRes, projectsRes, educationRes, researchRes, moviesRes, messagesRes] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/profile', { headers }),
-        fetch('http://localhost:5000/api/projects'),
-        fetch('http://localhost:5000/api/admin/education', { headers }),
-        fetch('http://localhost:5000/api/admin/research', { headers }),
-        fetch('http://localhost:5000/api/admin/movies', { headers }),
-        fetch('http://localhost:5000/api/admin/messages', { headers })
+        fetch('/api/admin/profile', { headers }),
+        fetch('/api/projects'),
+        fetch('/api/admin/education', { headers }),
+        fetch('/api/admin/research', { headers }),
+        fetch('/api/admin/movies', { headers }),
+        fetch('/api/admin/messages', { headers })
       ]);
 
       setProfile(await profileRes.json());
@@ -69,7 +69,7 @@ function AdminDashboard() {
   const saveProfile = async () => {
     setSaving(true);
     try {
-      const response = await fetch('http://localhost:5000/api/admin/profile', {
+      const response = await fetch('/api/admin/profile', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -283,7 +283,7 @@ function ProjectsManager({ projects, setProjects, token }) {
     if (!window.confirm('Delete this project?')) return;
 
     try {
-      await fetch(`http://localhost:5000/api/projects/${id}`, {
+      await fetch(`/api/projects/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -339,8 +339,8 @@ function ProjectEditModal({ project, setEditingProject, setProjects, projects, t
   const handleSave = async () => {
     try {
       const url = formData._id
-        ? `http://localhost:5000/api/projects/${formData._id}`
-        : 'http://localhost:5000/api/projects';
+        ? `/api/projects/${formData._id}`
+        : '/api/projects';
 
       const response = await fetch(url, {
         method: formData._id ? 'PUT' : 'POST',
@@ -464,7 +464,7 @@ function EducationManager({ education, setEducation, token }) {
     if (!window.confirm('Delete this education entry?')) return;
 
     try {
-      await fetch(`http://localhost:5000/api/admin/education/${id}`, {
+      await fetch(`/api/admin/education/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -518,8 +518,8 @@ function EducationEditModal({ education, setEditingEducation, setEducation, educ
   const handleSave = async () => {
     try {
       const url = formData._id
-        ? `http://localhost:5000/api/admin/education/${formData._id}`
-        : 'http://localhost:5000/api/admin/education';
+        ? `/api/admin/education/${formData._id}`
+        : '/api/admin/education';
 
       const response = await fetch(url, {
         method: formData._id ? 'PUT' : 'POST',
@@ -669,7 +669,7 @@ function MoviesManager({ movies, setMovies, token }) {
     if (!window.confirm('Delete this movie?')) return;
 
     try {
-      await fetch(`http://localhost:5000/api/admin/movies/${id}`, {
+      await fetch(`/api/admin/movies/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -727,8 +727,8 @@ function MovieEditModal({ movie, setEditingMovie, setMovies, movies, token }) {
   const handleSave = async () => {
     try {
       const url = formData._id
-        ? `http://localhost:5000/api/admin/movies/${formData._id}`
-        : 'http://localhost:5000/api/admin/movies';
+        ? `/api/admin/movies/${formData._id}`
+        : '/api/admin/movies';
 
       const response = await fetch(url, {
         method: formData._id ? 'PUT' : 'POST',
@@ -817,7 +817,7 @@ function MovieEditModal({ movie, setEditingMovie, setMovies, movies, token }) {
 function MessagesManager({ messages, setMessages, token }) {
   const markAsRead = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/admin/messages/${id}/read`, {
+      await fetch(`/api/admin/messages/${id}/read`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -831,7 +831,7 @@ function MessagesManager({ messages, setMessages, token }) {
     if (!window.confirm('Delete this message?')) return;
 
     try {
-      await fetch(`http://localhost:5000/api/admin/messages/${id}`, {
+      await fetch(`/api/admin/messages/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

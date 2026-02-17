@@ -20,7 +20,7 @@ const NavbarV2 = () => {
 
   const scrollToSection = (sectionId) => {
     if (sectionId === 'connect') {
-      window.location.href = '/professional-v2/contact';
+      window.location.href = '/professional/contact';
     } else {
       const element = document.getElementById(sectionId);
       if (element) {
