@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import NavbarV2 from './components/NavbarV2';
 import ScrollyCanvas from './components/ScrollyCanvas';
 import ReelCarousel from './components/ReelCarousel';

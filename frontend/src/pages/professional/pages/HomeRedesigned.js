@@ -212,20 +212,6 @@ const HomeRedesigned = () => {
             ))}
           </div>
         </motion.section>
-
-        {/* Footer */}
-        <motion.footer
-          className="minimal-footer"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <button onClick={handleDownloadResume} className="download-btn">
-            Download Resume
-          </button>
-          <p>© 2026 Likhith Vardhan G</p>
-        </motion.footer>
       </div>
     </div>
   );

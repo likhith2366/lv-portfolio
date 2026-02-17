@@ -20,7 +20,7 @@ const ConnectButton = () => {
   }, []);
 
   const handleClick = () => {
-    navigate('/professional/contact');
+    navigate('/professional-v2/contact');
   };
 
   return (
