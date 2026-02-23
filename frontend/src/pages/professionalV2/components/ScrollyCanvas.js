@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import './ScrollyCanvas.css';
 
 const FRAME_COUNT = 168;
+const MAX_DPR = 1.5;
 
 // Generate frame paths — pattern: index % 3 === 1 uses 0.041s, rest use 0.042s
 const framePaths = Array.from({ length: FRAME_COUNT }, (_, i) => {
@@ -18,22 +19,23 @@ const ScrollyCanvas = () => {
   const imagesRef = useRef([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
-  const lastDrawnRef = useRef(-1);
-  const renderingRef = useRef(false);
+  const lastDrawnFrame = useRef(-1);
+  const progressRef = useRef(0);
+  const rafId = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Spring-smoothed scroll progress — this is the key to butter smoothness
+  // Spring-smoothed progress for text overlays only (soft feel)
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 50,
-    damping: 25,
+    stiffness: 150,
+    damping: 30,
     restDelta: 0.0001,
   });
 
-  // Parallax text transforms
+  // Parallax text transforms — use spring for soft text movement
   const text1Opacity = useTransform(smoothProgress, [0, 0.05, 0.18, 0.25], [0, 1, 1, 0]);
   const text1Y = useTransform(smoothProgress, [0, 0.05, 0.25], [60, 0, -40]);
 
@@ -58,65 +60,48 @@ const ScrollyCanvas = () => {
     };
   }, []);
 
-  // Draw interpolated frame — blends between two adjacent frames
-  const drawInterpolated = useCallback((exactFrame) => {
+  // Draw a single whole frame — no crossfade blending
+  const drawFrame = useCallback((frameIndex) => {
     const canvas = canvasRef.current;
     const ctx = ctxRef.current;
     if (!canvas || !ctx) return;
 
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
     const cw = canvas.width / dpr;
     const ch = canvas.height / dpr;
 
-    const frameA = Math.floor(exactFrame);
-    const frameB = Math.min(frameA + 1, FRAME_COUNT - 1);
-    const blend = exactFrame - frameA;
+    const img = imagesRef.current[frameIndex];
+    if (!img?.complete || !img?.naturalWidth) return;
 
-    const imgA = imagesRef.current[frameA];
-    const imgB = imagesRef.current[frameB];
-
-    if (!imgA?.complete || !imgA?.naturalWidth) return;
-
-    // Recompute fit if image dimensions changed
-    const { sx, sy, sw, sh } = fitParamsRef.current;
-    if (sw === 0) {
-      computeFitParams(imgA.naturalWidth, imgA.naturalHeight, cw, ch);
+    // Recompute fit if needed
+    if (fitParamsRef.current.sw === 0) {
+      computeFitParams(img.naturalWidth, img.naturalHeight, cw, ch);
     }
     const p = fitParamsRef.current;
 
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    // Draw base frame at full opacity
     ctx.globalAlpha = 1;
-    ctx.drawImage(imgA, p.sx, p.sy, p.sw, p.sh);
-
-    // Crossfade blend to next frame
-    if (blend > 0.005 && imgB?.complete && imgB?.naturalWidth && frameA !== frameB) {
-      ctx.globalAlpha = blend;
-      ctx.drawImage(imgB, p.sx, p.sy, p.sw, p.sh);
-      ctx.globalAlpha = 1;
-    }
+    ctx.drawImage(img, p.sx, p.sy, p.sw, p.sh);
   }, [computeFitParams]);
 
-  // Resize canvas to match viewport
+  // Resize canvas to match viewport (capped DPR)
   const handleResize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
-    const ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
+    const ctx = canvas.getContext('2d', { alpha: false });
+    ctx.imageSmoothingEnabled = false;
     ctxRef.current = ctx;
     // Reset fit params so they recompute
     fitParamsRef.current = { sx: 0, sy: 0, sw: 0, sh: 0 };
-    if (lastDrawnRef.current >= 0) {
-      drawInterpolated(lastDrawnRef.current);
+    if (lastDrawnFrame.current >= 0) {
+      drawFrame(lastDrawnFrame.current);
     }
-  }, [drawInterpolated]);
+  }, [drawFrame]);
 
   // Preload all images
   useEffect(() => {
@@ -136,8 +121,8 @@ const ScrollyCanvas = () => {
         if (loadedCount === FRAME_COUNT) {
           setImagesLoaded(true);
           handleResize();
-          lastDrawnRef.current = 0;
-          drawInterpolated(0);
+          lastDrawnFrame.current = 0;
+          drawFrame(0);
         }
       };
       img.onerror = () => {
@@ -149,7 +134,7 @@ const ScrollyCanvas = () => {
     });
 
     imagesRef.current = images;
-  }, [handleResize, drawInterpolated]);
+  }, [handleResize, drawFrame]);
 
   // Handle window resize
   useEffect(() => {
@@ -158,30 +143,42 @@ const ScrollyCanvas = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
 
-  // Render loop — driven by spring-smoothed progress
+  // Store scroll progress in ref (no rendering here)
   useEffect(() => {
-    renderingRef.current = true;
+    const unsubscribe = scrollYProgress.on('change', (v) => {
+      progressRef.current = v;
+    });
+    return unsubscribe;
+  }, [scrollYProgress]);
+
+  // Continuous RAF loop — synced to display refresh, reads progressRef
+  useEffect(() => {
+    let running = true;
 
     const tick = () => {
-      if (!renderingRef.current) return;
+      if (!running) return;
 
-      const progress = smoothProgress.get();
-      const exactFrame = Math.min(progress * (FRAME_COUNT - 1), FRAME_COUNT - 1);
+      const progress = progressRef.current;
+      const frameIndex = Math.floor(
+        Math.min(Math.max(progress, 0) * (FRAME_COUNT - 1), FRAME_COUNT - 1)
+      );
 
-      // Only redraw if frame position actually changed
-      if (Math.abs(exactFrame - lastDrawnRef.current) > 0.005) {
-        drawInterpolated(exactFrame);
-        lastDrawnRef.current = exactFrame;
+      // Only redraw if the whole frame index changed
+      if (frameIndex !== lastDrawnFrame.current) {
+        drawFrame(frameIndex);
+        lastDrawnFrame.current = frameIndex;
       }
 
-      requestAnimationFrame(tick);
+      rafId.current = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
+
+    rafId.current = requestAnimationFrame(tick);
 
     return () => {
-      renderingRef.current = false;
+      running = false;
+      if (rafId.current) cancelAnimationFrame(rafId.current);
     };
-  }, [smoothProgress, drawInterpolated]);
+  }, [drawFrame]);
 
   return (
     <div className="scrolly-container" ref={containerRef}>

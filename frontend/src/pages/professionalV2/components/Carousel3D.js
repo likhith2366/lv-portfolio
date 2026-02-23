@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import './Carousel3D.css';
 
 const ITEMS = [
-  { id: 1, label: 'AI Analytics' },
-  { id: 2, label: 'Microservices' },
-  { id: 3, label: 'Cloud Platform' },
-  { id: 4, label: 'ML Pipeline' },
-  { id: 5, label: 'Creative Dev' },
-  { id: 6, label: 'Data Engine' },
+  { id: 1, label: 'Domain Aware', video: '/Assets/carousel-vids/domain_aware_video.mp4' },
+  { id: 2, label: 'HireLink', video: '/Assets/carousel-vids/hirelink_video.mp4' },
+  { id: 3, label: 'Fractional Owner', video: '/Assets/carousel-vids/fractional_owner.mp4' },
+  { id: 4, label: 'GitHub MCP', video: '/Assets/carousel-vids/github_mcp.mp4' },
+  { id: 5, label: 'Graph RAG', video: '/Assets/carousel-vids/graph_rag.mp4' },
+  { id: 6, label: 'Creative Dev', video: '/Assets/sunset.mp4' },
 ];
 
 const TRANSLATE_Z = 300;
@@ -48,11 +48,7 @@ const Carousel3D = () => {
         <h2 className="c3d-title">Featured Work</h2>
       </div>
 
-      <div
-        className="c3d-viewport"
-        onMouseEnter={() => { pausedRef.current = true; }}
-        onMouseLeave={() => { pausedRef.current = false; }}
-      >
+      <div className="c3d-viewport">
         <div
           ref={carouselRef}
           className="c3d-carousel"
@@ -75,7 +71,7 @@ const Carousel3D = () => {
                 playsInline
                 preload="auto"
               >
-                <source src="/Assets/sunset.mp4" type="video/mp4" />
+                <source src={item.video} type="video/mp4" />
               </video>
               <div className="c3d-item-overlay">
                 <span className="c3d-item-label">{item.label}</span>
@@ -85,7 +81,7 @@ const Carousel3D = () => {
         </div>
       </div>
 
-      <p className="c3d-hint">Hover to pause &middot; Click to explore</p>
+      <p className="c3d-hint">Click to pause &middot; Click again to resume</p>
     </section>
   );
 };

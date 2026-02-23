@@ -6,6 +6,7 @@ import ReelCarousel from './components/ReelCarousel';
 import ShowcaseCarousel from './components/ShowcaseCarousel';
 import Carousel3D from './components/Carousel3D';
 import ConnectButton3D from './components/ConnectButton3D';
+import EducationCards from './components/EducationCards';
 import AboutFooter from './components/AboutFooter';
 
 class ErrorFallback extends React.Component {
@@ -98,6 +99,9 @@ if (!isLoaded) {
 
         {/* 3D Project Carousel */}
         <Carousel3D />
+
+        {/* Education Cards */}
+        <EducationCards />
 
         {/* About Footer Section */}
         <AboutFooter />

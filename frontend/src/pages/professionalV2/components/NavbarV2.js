@@ -1,49 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './NavbarV2.css';
 
 const NavbarV2 = () => {
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 100);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
-    if (sectionId === 'connect') {
-      window.location.href = '/professional-v2/contact';
-    } else {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    }
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
     <nav className={`navbar-v2 ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-v2-content">
-        <div className="navbar-v2-logo" onClick={() => scrollToSection('hero')}>
+        <div className="navbar-v2-logo" onClick={() => navigate('/professional-v2')}>
           LV
         </div>
 
         <ul className="navbar-v2-links">
-          <li onClick={() => scrollToSection('hero')}>Home</li>
-          <li onClick={() => scrollToSection('experience')}>Experience</li>
-          <li onClick={() => scrollToSection('projects')}>Projects</li>
-          <li onClick={() => scrollToSection('connect')}>Connect</li>
+          <li className={isActive('/professional-v2') ? 'active' : ''} onClick={() => navigate('/professional-v2')}>Home</li>
+          <li className={isActive('/professional-v2/experience') ? 'active' : ''} onClick={() => navigate('/professional-v2/experience')}>Experience</li>
+          <li className={isActive('/professional-v2/projects') ? 'active' : ''} onClick={() => navigate('/professional-v2/projects')}>Projects</li>
+          <li className={isActive('/professional-v2/contact') ? 'active' : ''} onClick={() => navigate('/professional-v2/contact')}>Connect</li>
         </ul>
       </div>
     </nav>

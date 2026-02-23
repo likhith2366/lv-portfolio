@@ -13,6 +13,9 @@ import FoodPage from './pages/others/FoodPage';
 import ProfessionalPage from './pages/professional/ProfessionalPage';
 import ProfessionalV2Page from './pages/professionalV2/ProfessionalV2Page';
 import ContactPage from './pages/professionalV2/pages/ContactPage';
+import V2ProjectsPage from './pages/professionalV2/pages/V2ProjectsPage';
+import V2ExperiencePage from './pages/professionalV2/pages/V2ExperiencePage';
+import V2ProjectDetailPage from './pages/professionalV2/pages/V2ProjectDetailPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 
@@ -28,6 +31,9 @@ function App() {
           {/* Professional Profile Section */}
           <Route path="/professional/*" element={<ProfessionalPage />} />
           <Route path="/professional-v2" element={<ProfessionalV2Page />} />
+          <Route path="/professional-v2/projects/:id" element={<V2ProjectDetailPage />} />
+          <Route path="/professional-v2/projects" element={<V2ProjectsPage />} />
+          <Route path="/professional-v2/experience" element={<V2ExperiencePage />} />
           <Route path="/professional-v2/contact" element={<ContactPage />} />
 
           {/* Quick access to new professional page */}
