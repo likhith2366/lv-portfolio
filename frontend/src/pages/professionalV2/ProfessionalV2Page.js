@@ -7,6 +7,11 @@ import ShowcaseCarousel from './components/ShowcaseCarousel';
 import Carousel3D from './components/Carousel3D';
 import ConnectButton3D from './components/ConnectButton3D';
 import EducationCards from './components/EducationCards';
+import DraggableTicker from './components/DraggableTicker';
+import PhotoTicker from './components/PhotoTicker';
+import SideDock from './components/SideDock';
+import ImageStack from './components/ImageStack';
+import MusicDeck from './components/MusicDeck';
 import AboutFooter from './components/AboutFooter';
 
 class ErrorFallback extends React.Component {
@@ -71,6 +76,7 @@ if (!isLoaded) {
     <ErrorFallback>
       <div className="professional-v2-container">
         <NavbarV2 />
+        <SideDock />
 
         {/* Hero Video Section */}
         <section className="hero-video-section" id="hero">
@@ -91,14 +97,25 @@ if (!isLoaded) {
         {/* Scroll-Linked Frame Animation */}
         <ScrollyCanvas />
 
+              
+
         {/* Tech Stack Reel Carousel */}
         <ReelCarousel />
-
-        {/* Showcase Carousel */}
-        <ShowcaseCarousel />
-
-        {/* 3D Project Carousel */}
+         {/* 3D Project Carousel */}
         <Carousel3D />
+        {/* Showcase Carousel */}
+        {/* <ShowcaseCarousel /> */}
+
+           {/* Draggable Tech Ticker */}
+        <DraggableTicker />
+
+        {/* Photo Ticker */}
+        {/* <PhotoTicker /> */}
+
+      
+
+        {/* Music Deck */}
+        <MusicDeck />
 
         {/* Education Cards */}
         <EducationCards />

@@ -1,16 +1,24 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import MagazineViewer from '../components/MagazineViewer';
 import './V2ProjectDetailPage.css';
 
 const V2ProjectDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [project, setProject] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  // Use project passed via router state (works for fallback IDs too)
+  const passedProject = location.state?.project || null;
+
+  const [project, setProject] = useState(passedProject);
+  const [loading, setLoading] = useState(!passedProject);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    // If we already have project data from navigation state, skip fetch
+    if (passedProject) return;
+
     const fetchProject = async () => {
       try {
         setLoading(true);
@@ -25,7 +33,7 @@ const V2ProjectDetailPage = () => {
       }
     };
     fetchProject();
-  }, [id]);
+  }, [id, passedProject]);
 
   const handleClose = useCallback(() => {
     navigate('/professional-v2/projects');
@@ -39,7 +47,7 @@ const V2ProjectDetailPage = () => {
 
   return (
     <div className="v2pd-backdrop" onClick={handleBackdropClick}>
-      <span className="v2pd-close-hint">Click outside to go back</span>
+      <span className="v2pd-close-hint">Click outside or press Esc to go back</span>
 
       {loading && (
         <div className="v2pd-loading">

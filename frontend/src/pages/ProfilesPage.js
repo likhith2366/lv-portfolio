@@ -135,7 +135,7 @@ function ProfilesPage() {
       description: 'My professional journey, skills, and career highlights',
       avatar: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=400&fit=crop',
       hoverColor: '#667eea',
-      route: '/professional'
+      route: '/professional-v2'
     },
     {
       id: 'personal',

@@ -14,6 +14,9 @@ const VIDEO_MAP = {
   'Graph Neural Network': '/Assets/carousel-vids/graph_rag.mp4',
   'NewsHub WordPress Theme': null,
   'Coca-Cola Sales Forecasting': null,
+  'Divy': null,
+  'GragFlow': null,
+  'ICU Vital Sign Deterioration Forecaster': null,
 };
 
 const PLACEHOLDER_GRADIENTS = [
@@ -25,12 +28,15 @@ const PLACEHOLDER_GRADIENTS = [
 
 /* Fallback data in case backend is unreachable */
 const FALLBACK_PROJECTS = [
-  { _id: 'fb-1', title: 'Hire-Link', category: ['fullstack'], gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
-  { _id: 'fb-2', title: 'Domain-Aware RAG System', category: ['ml', 'backend'], gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
-  { _id: 'fb-3', title: 'GitHub MCP Agent', category: ['ml', 'devops'], gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
-  { _id: 'fb-4', title: 'Graph Neural Network', category: ['ml'], gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' },
-  { _id: 'fb-5', title: 'NewsHub WordPress Theme', category: ['fullstack'], gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)' },
-  { _id: 'fb-6', title: 'Coca-Cola Sales Forecasting', category: ['ml'], gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)' },
+  { _id: 'fb-1', title: 'Hire-Link', subtitle: 'Full-Stack Job Portal Platform', role: 'Full-Stack Developer', category: ['fullstack'], description: 'Enterprise-grade job portal with role-based access control, premium membership system, and real-time social feed.', techStack: ['Next.js 16', 'React 19', 'MongoDB', 'Clerk v7', 'Stripe', 'Supabase', 'Tailwind CSS'], achievements: ['Role-based access control with Clerk v7', 'Stripe subscription payments', 'Real-time social feed', 'Sub-2-second page loads'], github: 'https://github.com/likhith2366', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: '#667eea' },
+  { _id: 'fb-2', title: 'Domain-Aware RAG System', subtitle: 'Multi-Domain AI Retrieval System', role: 'AI/ML Engineer', category: ['ml', 'backend'], description: 'Intelligent multi-domain RAG system with automatic routing and semantic fallback mechanisms.', techStack: ['Python', 'LangChain', 'Qdrant Cloud', 'OpenAI GPT-4', 'Streamlit'], achievements: ['40% faster query resolution', '99% query success rate', 'Dual-layer routing mechanism'], github: 'https://github.com/likhith2366', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', color: '#f093fb' },
+  { _id: 'fb-3', title: 'GitHub MCP Agent', subtitle: 'AI-Powered Repository Analytics', role: 'AI/DevOps Engineer', category: ['ml', 'devops'], description: 'AI-powered GitHub analytics platform enabling natural language querying of repositories.', techStack: ['Python', 'Streamlit', 'OpenAI GPT-4', 'MCP', 'Docker'], achievements: ['Reduced manual navigation by 80%', 'Multi-step repository analysis', '8+ GitHub API toolsets'], github: 'https://github.com/likhith2366', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', color: '#4facfe' },
+  { _id: 'fb-4', title: 'Graph Neural Network', subtitle: 'Node Classification with GNN', role: 'ML Researcher', category: ['ml'], description: 'Dual GNN architectures implementing GCN and GAT for semi-supervised node classification.', techStack: ['PyTorch', 'PyTorch Geometric', 'NetworkX', 'Plotly'], achievements: ['GCN and GAT with multi-head attention', 'Interactive 3D visualization', 'End-to-end training pipeline'], github: 'https://github.com/likhith2366', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)', color: '#fa709a' },
+  { _id: 'fb-5', title: 'NewsHub WordPress Theme', subtitle: 'Custom WordPress Theme', role: 'Full-Stack Developer', category: ['fullstack'], description: 'Modern, responsive WordPress theme with Advanced Custom Fields integration.', techStack: ['WordPress', 'PHP', 'ACF', 'HTML5', 'CSS3', 'JavaScript'], achievements: ['Custom post types and taxonomies', 'Mobile-first responsive design', 'Security best practices'], github: 'https://github.com/likhith2366', gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)', color: '#a8edea' },
+  { _id: 'fb-6', title: 'Coca-Cola Sales Forecasting', subtitle: 'Time Series Analysis & Prediction', role: 'Data Scientist', category: ['ml'], description: 'Comprehensive sales forecasting system with 9+ statistical models.', techStack: ['Python', 'Pandas', 'Statsmodels', 'ARIMA', 'Holt-Winters'], achievements: ['Compared 9+ forecasting models', 'Seasonal decomposition analysis', 'Production-ready solution'], github: 'https://github.com/likhith2366', gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)', color: '#ffecd2' },
+  { _id: 'fb-7', title: 'Divy', subtitle: 'Fractional Real Estate Investment Platform', role: 'Software Engineer', category: ['fullstack'], description: 'Fractional real estate investment platform enabling partial ownership shares in properties.', techStack: ['React', 'Django', 'FastAPI', 'WebSockets', 'Docker', 'AWS'], achievements: ['JWT auth and RBAC', 'WebSocket real-time updates', 'Docker + CI/CD pipeline'], github: 'https://github.com/likhith2366/Hire-Link', gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)', color: '#43e97b' },
+  { _id: 'fb-8', title: 'GragFlow', subtitle: 'Graph-Based RAG System', role: 'Software Engineer', category: ['ml', 'backend'], description: 'Graph-based RAG system with LSTM and reinforcement learning for multi-hop reasoning.', techStack: ['Python', 'PyTorch', 'LSTM', 'Graph RAG', 'Groq API', 'LLaMA 3.3 70B'], achievements: ['18% summary accuracy improvement', '25% hallucination reduction', 'Multilingual support 10+ languages'], github: 'https://github.com/likhith2366', gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)', color: '#a18cd1' },
+  { _id: 'fb-9', title: 'ICU Vital Sign Deterioration Forecaster', subtitle: 'Deep Learning ICU Prediction', role: 'ML Engineer', category: ['ml'], description: 'PyTorch-based deep learning pipeline for 6-hour-ahead vital sign deterioration prediction.', techStack: ['Python', 'PyTorch', 'LSTM', 'ARIMA', 'Transformer', 'XGBoost', 'SHAP'], achievements: ['7.6% RMSE improvement (R² = 0.923)', 'Hybrid LSTM-ARIMA architecture', '96 engineered features'], github: 'https://github.com/likhith2366/ICU-VitalSign-Forecaster', gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)', color: '#ff9a9e' },
 ];
 
 const COMING_SOON = (index) => ({
@@ -151,6 +157,9 @@ function buildRows(projects) {
 const V2ProjectsPage = () => {
   const navigate = useNavigate();
 
+  // Scroll to top on mount
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   // Start with fallback data so cards always show immediately
   const fallback = buildRows(FALLBACK_PROJECTS);
   const [row1, setRow1] = useState(fallback.r1);
@@ -159,7 +168,6 @@ const V2ProjectsPage = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        // Use relative path so CRA proxy handles it
         const response = await fetch('/api/projects');
         if (!response.ok) throw new Error('API error');
         const data = await response.json();
@@ -170,16 +178,14 @@ const V2ProjectsPage = () => {
         }
       } catch (err) {
         console.error('Error fetching projects, using fallback data:', err);
-        // Fallback data is already set as initial state
       }
     };
     fetchProjects();
   }, []);
 
   const handleSelect = useCallback((project) => {
-    // Navigate to magazine page — works with both backend _id and fallback _id
     if (project._id && !project._id.startsWith('placeholder')) {
-      navigate(`/professional-v2/projects/${project._id}`);
+      navigate(`/professional-v2/projects/${project._id}`, { state: { project } });
     }
   }, [navigate]);
 

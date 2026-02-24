@@ -1,0 +1,115 @@
+.dticker-section {
+  width: 100%;
+  padding: 40px 0;
+  background: #0a0a0a;
+  overflow: hidden;
+  position: relative;
+}
+
+.dticker-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dticker-viewport:active {
+  cursor: grabbing;
+}
+
+.dticker-track {
+  display: flex;
+  align-items: center;
+  will-change: transform;
+}
+
+.dticker-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 12px 24px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+}
+
+.dticker-item:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+.dticker-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: brightness(0.9);
+  transition: filter 0.3s;
+}
+
+.dticker-item:hover .dticker-icon {
+  filter: brightness(1.1);
+}
+
+.dticker-label {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  transition: color 0.3s;
+}
+
+.dticker-item:hover .dticker-label {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Edge fade masks */
+.dticker-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.dticker-fade--left {
+  left: 0;
+  background: linear-gradient(to right, #0a0a0a, transparent);
+}
+
+.dticker-fade--right {
+  right: 0;
+  background: linear-gradient(to left, #0a0a0a, transparent);
+}
+
+@media (max-width: 768px) {
+  .dticker-section {
+    padding: 24px 0;
+  }
+
+  .dticker-item {
+    padding: 10px 18px;
+    gap: 8px;
+  }
+
+  .dticker-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .dticker-label {
+    font-size: 12px;
+  }
+
+  .dticker-fade {
+    width: 50px;
+  }
+}
