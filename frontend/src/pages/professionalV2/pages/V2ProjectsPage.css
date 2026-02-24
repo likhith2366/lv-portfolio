@@ -1,0 +1,191 @@
+/* ══════════════════════════════════
+   V2 Projects Page
+   ══════════════════════════════════ */
+.v2-projects-page {
+  min-height: 100vh;
+  background: #0a0a0a;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ── Hero ── */
+.v2p-hero {
+  padding: 140px 40px 40px;
+  text-align: center;
+}
+
+.v2p-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #ff6b35;
+  padding: 5px 16px;
+  border-radius: 20px;
+  background: rgba(255, 107, 53, 0.08);
+  border: 1px solid rgba(255, 107, 53, 0.15);
+  margin-bottom: 16px;
+}
+
+.v2p-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 12px;
+  background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.v2p-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.35);
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════
+   Row
+   ══════════════════════════════════ */
+.v2p-row {
+  padding: 20px 0 60px;
+}
+
+.v2p-row-label {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+  margin: 0 0 10px;
+}
+
+/* ══════════════════════════════════
+   3D Carousel
+   ══════════════════════════════════ */
+.v2p-carousel-viewport {
+  width: 100%;
+  height: 460px;
+  position: relative;
+  perspective: 2000px;
+  overflow: visible;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.v2p-carousel-viewport:active {
+  cursor: grabbing;
+}
+
+.v2p-carousel-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+}
+
+/* ── Slot (3D positioning wrapper) ── */
+.v2p-carousel-slot {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+/* ── Card ── */
+.v2p-carousel-card {
+  position: absolute;
+  width: 260px;
+  height: 360px;
+  margin-left: -130px;
+  margin-top: -180px;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  backface-visibility: hidden;
+}
+
+.v2p-carousel-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(255, 107, 53, 0.1);
+}
+
+.v2p-carousel-card--placeholder {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ── Video / Placeholder ── */
+.v2p-carousel-vid {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.v2p-carousel-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Overlay ── */
+.v2p-carousel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 50px 18px 18px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v2p-carousel-cat {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #ff8e53;
+}
+
+.v2p-carousel-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .v2p-hero {
+    padding: 120px 20px 30px;
+  }
+
+  .v2p-title {
+    font-size: 2.2rem;
+  }
+
+  .v2p-carousel-viewport {
+    height: 380px;
+  }
+
+  .v2p-carousel-card {
+    width: 200px;
+    height: 280px;
+    margin-left: -100px;
+    margin-top: -140px;
+  }
+}

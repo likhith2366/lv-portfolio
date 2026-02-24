@@ -1,0 +1,597 @@
+/* ══════════════════════════════════
+   3D Magazine Viewer — Full 3D
+   ══════════════════════════════════ */
+
+.mag-wrapper {
+  position: relative;
+  padding: 40px 60px 70px;
+}
+
+.mag-scene {
+  width: 420px;
+  height: 600px;
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+}
+
+.mag-book {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  /* offset so spine sits left-center, pages fan right */
+  transform: translateX(50px);
+  transition: transform 0.3s ease;
+}
+
+/* ── Spine ── */
+.mag-spine {
+  position: absolute;
+  top: 0;
+  left: -6px;
+  width: 12px;
+  height: 100%;
+  background: linear-gradient(to right,
+    #0a0a12 0%,
+    #1a1a28 30%,
+    #0f0f1a 70%,
+    #0a0a12 100%);
+  transform: rotateY(90deg) translateZ(6px);
+  transform-origin: right center;
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Page edge lines (visible thickness) ── */
+.mag-edges {
+  position: absolute;
+  top: 4px;
+  right: 0;
+  bottom: 4px;
+  width: 100%;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+.mag-edge-line {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  right: 2px;
+  height: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  border-radius: 0 2px 2px 0;
+  background: linear-gradient(to left, rgba(200, 200, 220, 0.03), transparent 20%);
+}
+
+/* ══════════════════════════════════
+   Pages
+   ══════════════════════════════════ */
+
+.mag-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.4, 0.0, 0.2, 1);
+  cursor: pointer;
+  will-change: transform;
+  transform: translateZ(var(--page-depth, 0px));
+}
+
+.mag-page--flipped {
+  transform: translateZ(var(--page-depth, 0px)) rotateY(-180deg);
+}
+
+/* ── Face base ── */
+.mag-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 2px 12px 12px 2px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.mag-face--front {
+  background: #111119;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    4px 4px 20px rgba(0, 0, 0, 0.5),
+    1px 0 3px rgba(0, 0, 0, 0.3),
+    inset -30px 0 40px -20px rgba(0, 0, 0, 0.15);
+}
+
+.mag-face--back {
+  transform: rotateY(180deg);
+  background: #111119;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow:
+    -4px 4px 20px rgba(0, 0, 0, 0.5),
+    -1px 0 3px rgba(0, 0, 0, 0.3),
+    inset 30px 0 40px -20px rgba(0, 0, 0, 0.15);
+}
+
+/* Spine shadow on front */
+.mag-face--front::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 100%;
+  background: linear-gradient(to right,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 40%,
+    transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Spine shadow on back */
+.mag-face--back::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 100%;
+  background: linear-gradient(to left,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 40%,
+    transparent 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Light reflection on front page edge */
+.mag-face--front::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: 0;
+  width: 1px;
+  height: 80%;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.08) 30%,
+    rgba(255, 255, 255, 0.04) 70%,
+    transparent);
+  pointer-events: none;
+}
+
+/* ── Page curl shadow (appears during flip) ── */
+.mag-page-curl {
+  position: absolute;
+  top: 0;
+  right: -30px;
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(to right,
+    rgba(0, 0, 0, 0.15),
+    transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.mag-page--flipped .mag-page-curl {
+  opacity: 0;
+}
+
+/* Hover lift */
+.mag-page:not(.mag-page--flipped):hover {
+  filter: brightness(1.04);
+}
+
+/* ══════════════════════════════════
+   Content Layouts
+   ══════════════════════════════════ */
+
+/* ── Cover ── */
+.mag-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 40px 36px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.mag-cover--back {
+  justify-content: center;
+  align-items: center;
+}
+
+.mag-cover-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.mag-cover-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.mag-cover-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mag-cover-badge {
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ff8e53;
+  padding: 5px 14px;
+  border-radius: 20px;
+  background: rgba(255, 107, 53, 0.1);
+  border: 1px solid rgba(255, 107, 53, 0.15);
+  margin-bottom: 18px;
+}
+
+.mag-cover-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 10px;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.mag-cover-subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.45);
+  margin: 0 0 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.mag-cover-role {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.mag-cover-hint {
+  position: absolute;
+  bottom: 20px;
+  right: 28px;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 1;
+}
+
+.mag-cover-hint svg {
+  animation: mag-hint 1.5s ease-in-out infinite;
+}
+
+@keyframes mag-hint {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+/* ── Inner page layout ── */
+.mag-page-inner {
+  padding: 36px 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.mag-page-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+  margin: 0 0 12px;
+}
+
+.mag-page-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 20px;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+}
+
+.mag-page-num {
+  position: absolute;
+  bottom: 18px;
+  right: 26px;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.1);
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* ── About text ── */
+.mag-about-text {
+  flex: 1;
+  overflow-y: auto;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.85;
+  padding-right: 6px;
+}
+
+.mag-about-text::-webkit-scrollbar { width: 2px; }
+.mag-about-text::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.08); border-radius: 2px; }
+
+.mag-about-text p { margin: 0 0 14px; }
+.mag-about-text p:last-child { margin: 0; }
+
+/* ── Tech chips ── */
+.mag-tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+  align-content: flex-start;
+}
+
+.mag-tech-chip {
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.25s ease;
+}
+
+.mag-tech-chip:hover {
+  background: rgba(255, 107, 53, 0.1);
+  border-color: rgba(255, 107, 53, 0.25);
+  color: #ff8e53;
+}
+
+.mag-tech-chip--lg {
+  padding: 10px 18px;
+  font-size: 0.82rem;
+}
+
+/* ── Achievements ── */
+.mag-achievements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+.mag-achievement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.65;
+}
+
+.mag-achievement-num {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #ff6b35;
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: rgba(255, 107, 53, 0.1);
+  margin-top: 1px;
+  letter-spacing: 0;
+}
+
+/* ── Links page ── */
+.mag-links-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 40px 30px;
+  gap: 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.mag-links-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.mag-links-subtitle {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 0 16px;
+  max-width: 260px;
+  line-height: 1.6;
+}
+
+.mag-links-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 260px;
+}
+
+.mag-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+}
+
+.mag-link-btn--github {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mag-link-btn--github:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.mag-link-btn--live {
+  background: linear-gradient(135deg, #ff6b35, #ff8e53);
+  color: #fff;
+}
+
+.mag-link-btn--live:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.25);
+}
+
+.mag-link-btn--back {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.78rem;
+  padding: 8px;
+}
+
+.mag-link-btn--back:hover { color: #fff; }
+
+/* ══════════════════════════════════
+   Navigation
+   ══════════════════════════════════ */
+
+.mag-nav {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mag-nav-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mag-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.mag-nav-btn:disabled {
+  opacity: 0.2;
+  cursor: default;
+  pointer-events: none;
+}
+
+.mag-nav-track {
+  width: 100px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mag-nav-progress {
+  height: 100%;
+  background: #ff6b35;
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mag-nav-count {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+
+/* ══════════════════════════════════
+   Responsive
+   ══════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .mag-wrapper { padding: 20px 20px 60px; }
+
+  .mag-scene {
+    width: 300px;
+    height: 440px;
+  }
+
+  .mag-book { transform: translateX(30px); }
+
+  .mag-cover { padding: 28px 24px; }
+  .mag-cover-title { font-size: 1.6rem; }
+  .mag-page-inner { padding: 28px 22px; }
+  .mag-page-heading { font-size: 1.1rem; }
+}
+
+@media (max-width: 480px) {
+  .mag-scene {
+    width: 250px;
+    height: 370px;
+  }
+
+  .mag-book { transform: translateX(20px); }
+  .mag-cover-title { font-size: 1.3rem; }
+  .mag-about-text { font-size: 0.72rem; }
+  .mag-nav-track { width: 60px; }
+}

@@ -189,6 +189,49 @@ export function MusicPlayerProvider({ children }) {
     }
   }, [tracks, shuffle, shuffleOrder, getAudioURL, volume, showToastNotification]);
 
+  // Play a direct/custom track object { title, artist, src, cover }
+  const playDirectTrack = useCallback(async (track) => {
+    if (!audioRef.current || !track?.src) return;
+
+    // Stop current audio
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+
+    // Load the custom track
+    const audioURL = getAudioURL(track.src);
+    audioRef.current.src = audioURL;
+
+    // Set a virtual current track so the player UI shows it
+    setTracks((prev) => {
+      const existing = prev.findIndex((t) => t.src === track.src);
+      if (existing !== -1) {
+        setCurrentTrackIndex(existing);
+        return prev;
+      }
+      const newTrack = {
+        id: `direct-${Date.now()}`,
+        title: track.title || 'Unknown',
+        artist: track.artist || 'Unknown',
+        src: track.src,
+        cover: track.cover || '',
+        durationSeconds: 0,
+        tags: [],
+      };
+      const updated = [...prev, newTrack];
+      setCurrentTrackIndex(updated.length - 1);
+      return updated;
+    });
+
+    try {
+      await audioRef.current.play();
+      await fadeIn(audioRef.current, 200, volume);
+      setIsPlaying(true);
+      showToastNotification(`Playing: ${track.title}`);
+    } catch (error) {
+      console.error('Direct playback error:', error);
+    }
+  }, [getAudioURL, volume, showToastNotification]);
+
   // Pause
   const pauseTrack = useCallback(async () => {
     if (!audioRef.current) return;
@@ -375,6 +418,7 @@ export function MusicPlayerProvider({ children }) {
     currentTime,
     duration,
     playTrack,
+    playDirectTrack,
     pauseTrack,
     resumeTrack,
     togglePlayPause,

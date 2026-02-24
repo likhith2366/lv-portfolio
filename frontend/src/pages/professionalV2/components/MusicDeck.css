@@ -1,0 +1,244 @@
+.music-deck-section {
+  width: 100%;
+  padding: 80px 20px;
+  background: #0a0a0a;
+  overflow: hidden;
+  user-select: none;
+}
+
+.music-deck-title {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 50px;
+  letter-spacing: -0.02em;
+}
+
+.music-deck-title span {
+  background: linear-gradient(135deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Fan Stage ── */
+.music-deck-stage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+  padding: 40px 0;
+}
+
+.music-deck-fan {
+  position: relative;
+  width: 260px;
+  height: 360px;
+  transform-style: preserve-3d;
+}
+
+/* ── Card ── */
+.music-deck-card {
+  position: absolute;
+  width: 260px;
+  height: 360px;
+  left: 0;
+  top: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-origin: center bottom;
+}
+
+.music-deck-card--active {
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(167, 139, 250, 0.08);
+}
+
+.music-deck-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.music-deck-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Gradient overlay */
+.music-deck-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+  pointer-events: none;
+}
+
+/* Song info */
+.music-deck-card-info {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.music-deck-card-song {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 3px;
+  line-height: 1.3;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.music-deck-card--active .music-deck-card-song {
+  font-size: 1.05rem;
+}
+
+.music-deck-card-artist {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Play icon / EQ bars */
+.music-deck-card-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.25s;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.music-deck-card:hover .music-deck-card-play-icon {
+  opacity: 1;
+}
+
+/* Always show EQ bars when playing */
+.music-deck-card .music-deck-card-play-icon:has(.music-deck-eq-bars) {
+  opacity: 1;
+}
+
+.music-deck-card-play-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* EQ bars */
+.music-deck-eq-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 18px;
+}
+
+.music-deck-eq-bar {
+  width: 3px;
+  background: #a78bfa;
+  border-radius: 2px;
+  animation: eqBounce 0.8s ease-in-out infinite alternate;
+}
+
+.music-deck-eq-bar:nth-child(1) { height: 7px; animation-delay: 0s; }
+.music-deck-eq-bar:nth-child(2) { height: 14px; animation-delay: 0.2s; }
+.music-deck-eq-bar:nth-child(3) { height: 10px; animation-delay: 0.4s; }
+.music-deck-eq-bar:nth-child(4) { height: 16px; animation-delay: 0.1s; }
+
+@keyframes eqBounce {
+  0% { transform: scaleY(0.35); }
+  100% { transform: scaleY(1); }
+}
+
+/* Dots */
+.music-deck-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.music-deck-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  border: none;
+  padding: 0;
+}
+
+.music-deck-dot.active {
+  background: #a78bfa;
+  transform: scale(1.3);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .music-deck-section {
+    padding: 50px 12px;
+  }
+
+  .music-deck-title {
+    font-size: 1.6rem;
+    margin-bottom: 32px;
+  }
+
+  .music-deck-fan {
+    width: 200px;
+    height: 280px;
+  }
+
+  .music-deck-card {
+    width: 200px;
+    height: 280px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .music-deck-fan {
+    width: 180px;
+    height: 250px;
+  }
+
+  .music-deck-card {
+    width: 180px;
+    height: 250px;
+    border-radius: 12px;
+  }
+}

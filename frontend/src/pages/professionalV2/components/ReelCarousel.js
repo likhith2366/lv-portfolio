@@ -16,8 +16,8 @@ const TECH_ICONS = [
 ];
 
 const ICON_SIZE = 55;
-const TRIGGER_DISTANCE = 50;
-const FADE_DELAY = 1400;
+const TRIGGER_DISTANCE = 25;
+const FADE_DELAY = 400;
 const MAX_TRAIL = 16;
 
 const ReelCarousel = () => {
@@ -114,7 +114,7 @@ const ReelCarousel = () => {
     if (el._fadeTimer) clearTimeout(el._fadeTimer);
     el._fadeTimer = setTimeout(() => {
       el.style.transition =
-        'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease-in';
+        'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease-in';
       el.style.transform = `translate(-50%, -50%) scale(0.2) rotate(${rotation + 15}deg)`;
       el.style.opacity = '0';
     }, FADE_DELAY);

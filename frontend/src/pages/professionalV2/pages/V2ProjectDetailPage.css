@@ -1,0 +1,108 @@
+/* ══════════════════════════════════
+   V2 Project Detail Page (Magazine)
+   ══════════════════════════════════ */
+.v2pd-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: v2pd-fade-in 0.4s ease;
+}
+
+@keyframes v2pd-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.v2pd-magazine-wrapper {
+  cursor: default;
+  position: relative;
+  animation: v2pd-scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes v2pd-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Loading ── */
+.v2pd-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
+}
+
+.v2pd-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #ff6b35;
+  border-radius: 50%;
+  animation: v2pd-spin 0.8s linear infinite;
+}
+
+@keyframes v2pd-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Error ── */
+.v2pd-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.v2pd-error h2 {
+  font-size: 1.4rem;
+  color: #fff;
+  margin: 0;
+}
+
+.v2pd-error p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.v2pd-error-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.v2pd-error-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Close hint ── */
+.v2pd-close-hint {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.25);
+  z-index: 2001;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+}

@@ -80,6 +80,15 @@
   width: 100%;
 }
 
+.navbar-v2-links li.active {
+  color: #fff;
+}
+
+.navbar-v2-links li.active::after {
+  width: 100%;
+  background: #ff6b35;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .navbar-v2 {
