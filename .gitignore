@@ -147,8 +147,9 @@ go.work.sum
 # Claude Code plans (uncomment if you don't want to track)
 # .claude/
 
-# Large video files
-frontend/public/Assets/*.mp4
+# Sunset videos (too large for GitHub)
+frontend/public/Assets/sunset.mp4
+frontend/public/Assets/sunset_1920.mp4
 
 # Sample folder
 sample/

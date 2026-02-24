@@ -146,6 +146,99 @@ Deployed production-ready forecasting solution by training the optimal Additive 
     gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
     color: '#ffecd2',
     order: 6
+  },
+  {
+    title: 'Divy',
+    subtitle: 'Fractional Real Estate Investment Platform',
+    role: 'Software Engineer / Team Member',
+    category: ['fullstack'],
+    description: 'Fractional real estate investment platform enabling users to purchase partial ownership shares in properties, increasing accessibility to real estate investing.',
+    detailedDescription: `Architected and developed Divy, a fractional real estate investment platform enabling users to purchase partial ownership shares in properties, increasing accessibility to real estate investing.
+
+Built a React.js frontend and Django + FastAPI backend, implementing JWT-based authentication and role-based access control for secure user and transaction management.
+
+Implemented WebSocket-based real-time communication to support live updates for investment status, property availability, and user activity events, improving user responsiveness and engagement.
+
+Containerized services using Docker and established CI/CD pipelines with GitHub Actions, enabling automated testing and deployments and reducing release errors.
+
+Deployed backend services on AWS EC2, static assets on AWS S3, and configured Cloudflare for DNS, CDN, and HTTPS, improving application performance and reliability.
+
+Followed Agile development practices, leveraging Jira dashboards for sprint planning, backlog management, and progress tracking, improving delivery velocity and team coordination.`,
+    techStack: ['React', 'Django', 'FastAPI', 'WebSockets', 'SQLite', 'Docker', 'GitHub Actions', 'AWS EC2', 'S3', 'Cloudflare', 'JWT'],
+    achievements: [
+      'Built fractional real estate investment platform with partial ownership',
+      'Implemented JWT-based authentication and role-based access control',
+      'Integrated WebSocket-based real-time communication for live updates',
+      'Containerized services with Docker and CI/CD via GitHub Actions',
+      'Deployed on AWS EC2 and S3 with Cloudflare CDN and HTTPS',
+      'Followed Agile practices with Jira for sprint planning and tracking'
+    ],
+    github: 'https://github.com/likhith2366/Hire-Link',
+    gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    color: '#43e97b',
+    order: 7
+  },
+  {
+    title: 'GragFlow',
+    subtitle: 'Graph-Based Retrieval-Augmented Generation System',
+    role: 'Software Engineer',
+    category: ['ml', 'backend'],
+    description: 'Graph-based RAG system integrating LSTM and reinforcement learning for multi-hop reasoning, improving summary accuracy by 18% and reducing hallucinations by 25%.',
+    detailedDescription: `Improved summary accuracy for large multilingual texts by 18% by integrating LSTM and reinforcement learning techniques for multi-hop reasoning and path detection within the GRAGFlow framework.
+
+Reduced hallucinations in text summarization outputs by 25% through the implementation of Leiden community detection and embedding-based hallucination mitigation techniques, supported by rigorous testing and debugging.
+
+Accelerated development cycles by 30% by coordinating agile workflows, managing project timelines, conducting code reviews, and leveraging Git for version control and collaboration.
+
+Engineered a multi-resolution community detection system using the Leiden algorithm with a 9-parameter resolution sweep, enabling adaptive graph partitioning and efficient context isolation for large-scale entity graphs.
+
+Developed multilingual support with language-aware embeddings (MiniLM for English, DistilUSE for multilingual) and automatic language detection, enabling cross-lingual knowledge retrieval across 10+ languages.
+
+Created interactive force-directed graph visualizations using PyVis with community-based color coding, enabling intuitive exploration of entity relationships and knowledge graph structure.`,
+    techStack: ['Python', 'PyTorch', 'LSTM', 'Reinforcement Learning', 'Graph RAG', 'Groq API', 'LLaMA 3.3 70B', 'NetworkX', 'iGraph', 'Sentence Transformers', 'PyVis', 'NewsAPI', 'scikit-learn', 'langdetect', 'FuzzyWuzzy'],
+    achievements: [
+      'Improved summary accuracy by 18% with LSTM and reinforcement learning',
+      'Reduced hallucinations by 25% via Leiden community detection',
+      'Accelerated development cycles by 30% with agile workflows',
+      'Engineered multi-resolution community detection with 9-parameter sweep',
+      'Developed multilingual support across 10+ languages',
+      'Created interactive force-directed graph visualizations with PyVis'
+    ],
+    github: 'https://github.com/likhith2366',
+    gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+    color: '#a18cd1',
+    order: 8
+  },
+  {
+    title: 'ICU Vital Sign Deterioration Forecaster',
+    subtitle: 'Deep Learning ICU Prediction Pipeline',
+    role: 'Machine Learning Engineer',
+    category: ['ml'],
+    description: 'PyTorch-based deep learning pipeline for 6-hour-ahead vital sign deterioration prediction in ICU patients, achieving 7.6% RMSE improvement over standalone LSTM.',
+    detailedDescription: `Designed and developed a PyTorch-based deep learning pipeline for 6-hour-ahead vital sign deterioration prediction in ICU patients, leveraging the MIMIC-III clinical database with 40,000+ patient records.
+
+Engineered a novel Hybrid LSTM-ARIMA architecture with Adaptive Fusion and Temporal Convolutional Networks (TCN), achieving a 7.6% RMSE improvement over standalone LSTM and 14.7% over XGBoost baselines (R² = 0.923).
+
+Built a comprehensive feature engineering pipeline extracting 96 features across temporal statistics, FFT frequency analysis, wavelet decomposition, vital sign interactions, and clinical severity scores (SOFA, APACHE).
+
+Conducted systematic comparative evaluation across 6 model architectures (Hybrid LSTM-ARIMA, LSTM, Transformer, TCN, XGBoost, ARIMA) using time-series cross-validation with patient-level splits to prevent data leakage.
+
+Implemented SHAP-based model interpretability using DeepExplainer and TreeExplainer, generating clinically actionable feature importance rankings and temporal contribution analyses for healthcare providers.
+
+Optimized training with mixed precision (AMP), Lookahead optimizer, cosine annealing warm restarts, gradient clipping, and early stopping, reducing training time while maintaining model convergence stability.`,
+    techStack: ['Python', 'PyTorch', 'LSTM', 'ARIMA', 'Transformer', 'TCN', 'XGBoost', 'SHAP', 'NumPy', 'Pandas', 'SciPy', 'MIMIC-III'],
+    achievements: [
+      'Achieved 7.6% RMSE improvement over standalone LSTM (R² = 0.923)',
+      'Engineered Hybrid LSTM-ARIMA with Adaptive Fusion and TCN',
+      'Extracted 96 features including FFT, wavelet, and clinical severity scores',
+      'Compared 6 model architectures with patient-level cross-validation',
+      'Implemented SHAP-based interpretability for clinical decision support',
+      'Optimized training with mixed precision AMP and Lookahead optimizer'
+    ],
+    github: 'https://github.com/likhith2366/ICU-VitalSign-Forecaster',
+    gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)',
+    color: '#ff9a9e',
+    order: 9
   }
 ];
 

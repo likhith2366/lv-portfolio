@@ -8,7 +8,6 @@ const ITEMS = [
   { id: 3, label: 'Fractional Owner', video: '/Assets/carousel-vids/fractional_owner.mp4' },
   { id: 4, label: 'GitHub MCP', video: '/Assets/carousel-vids/github_mcp.mp4' },
   { id: 5, label: 'Graph RAG', video: '/Assets/carousel-vids/graph_rag.mp4' },
-  { id: 6, label: 'Creative Dev', video: '/Assets/sunset.mp4' },
 ];
 
 const TRANSLATE_Z = 300;

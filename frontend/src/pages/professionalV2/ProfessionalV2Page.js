@@ -3,14 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import NavbarV2 from './components/NavbarV2';
 import ScrollyCanvas from './components/ScrollyCanvas';
 import ReelCarousel from './components/ReelCarousel';
-import ShowcaseCarousel from './components/ShowcaseCarousel';
 import Carousel3D from './components/Carousel3D';
 import ConnectButton3D from './components/ConnectButton3D';
 import EducationCards from './components/EducationCards';
 import DraggableTicker from './components/DraggableTicker';
-import PhotoTicker from './components/PhotoTicker';
 import SideDock from './components/SideDock';
-import ImageStack from './components/ImageStack';
 import MusicDeck from './components/MusicDeck';
 import AboutFooter from './components/AboutFooter';
 
