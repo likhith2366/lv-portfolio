@@ -165,3 +165,21 @@
     font-size: 1rem;
   }
 }
+
+@media (max-width: 480px) {
+  .connect-button-container {
+    bottom: 20px;
+  }
+
+  .connect-button {
+    padding: 0.65rem 1.5rem;
+  }
+
+  .button-text {
+    font-size: 0.85rem;
+  }
+
+  .button-icon {
+    font-size: 0.85rem;
+  }
+}

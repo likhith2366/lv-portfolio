@@ -52,3 +52,36 @@
   box-shadow: 0 4px 25px rgba(255, 255, 255, 0.25);
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.4rem 1.2rem;
+    top: 12px;
+  }
+
+  .navbar-content {
+    gap: 0.6rem;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.35rem 0.8rem;
+    top: 8px;
+  }
+
+  .navbar-content {
+    gap: 0.3rem;
+  }
+
+  .nav-link {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.7rem;
+    letter-spacing: 0;
+  }
+}
