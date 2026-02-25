@@ -3,8 +3,8 @@
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   z-index: 1000;
   cursor: pointer;
   border-radius: 50%;
@@ -50,9 +50,9 @@
   position: relative;
   z-index: 1001;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   color: white;
   pointer-events: none;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -62,24 +62,24 @@
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .connect-button-3d-container {
-    width: 80px;
-    height: 80px;
-    bottom: 30px;
+    width: 68px;
+    height: 68px;
+    bottom: 28px;
   }
 
   .connect-button-text {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 }
 
 @media (max-width: 480px) {
   .connect-button-3d-container {
-    width: 70px;
-    height: 70px;
-    bottom: 20px;
+    width: 58px;
+    height: 58px;
+    bottom: 18px;
   }
 
   .connect-button-text {
-    font-size: 0.65rem;
+    font-size: 0.55rem;
   }
 }

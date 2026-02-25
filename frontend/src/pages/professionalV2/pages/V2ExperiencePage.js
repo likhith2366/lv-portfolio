@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import NavbarV2 from '../components/NavbarV2';
@@ -53,6 +53,8 @@ const EXPERIENCES = [
 
 const V2ExperiencePage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
     <div className="v2-experience-page">

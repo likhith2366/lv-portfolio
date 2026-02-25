@@ -39,7 +39,7 @@ const ITEMS = [
   },
   {
     label: 'Instagram',
-    href: 'https://www.instagram.com/likhith_vardhan_/',
+    href: 'https://www.instagram.com/alsolikhith',
     color: '#e1306c',
     icon: (
       <svg viewBox="0 0 24 24" fill="url(#igGrad)">

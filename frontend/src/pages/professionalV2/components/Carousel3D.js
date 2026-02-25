@@ -59,7 +59,7 @@ const Carousel3D = () => {
               style={{
                 transform: `rotateY(${i * angleStep}deg) translateZ(${TRANSLATE_Z}px)`,
               }}
-              onClick={() => navigate('/professional/projects')}
+              onClick={() => navigate('/professional-v2/projects')}
             >
               <video
                 ref={(el) => (videoRefs.current[i] = el)}

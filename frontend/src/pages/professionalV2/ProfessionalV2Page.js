@@ -121,7 +121,7 @@ if (!isLoaded) {
         <AboutFooter />
 
         {/* 3D Connect Button */}
-        <ConnectButton3D onClick={() => navigate('/professional/contact')} />
+        <ConnectButton3D onClick={() => navigate('/professional-v2/contact')} />
       </div>
     </ErrorFallback>
   );
