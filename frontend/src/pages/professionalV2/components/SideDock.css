@@ -101,3 +101,29 @@
     padding: 5px 6px;
   }
 }
+
+@media (max-width: 480px) {
+  .side-dock {
+    left: 6px;
+    bottom: 6px;
+  }
+
+  .side-dock-bg {
+    inset: -5px -8px;
+    border-radius: 14px;
+  }
+
+  .side-dock-items {
+    gap: 2px;
+    padding: 4px 5px;
+  }
+
+  .dock-icon-link {
+    border-radius: 9px;
+  }
+
+  .dock-tooltip {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}

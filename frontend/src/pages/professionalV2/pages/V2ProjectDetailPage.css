@@ -318,32 +318,102 @@
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .v2pd-backdrop {
-    padding: 20px 12px;
+    padding: 12px 10px;
     align-items: flex-start;
   }
 
   .v2pd-card {
     max-width: 100%;
-    border-radius: 16px;
+    border-radius: 14px;
   }
 
   .v2pd-card-header {
-    padding: 28px 20px 24px;
+    padding: 24px 16px 20px;
   }
 
   .v2pd-card-title {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+  }
+
+  .v2pd-card-subtitle {
+    font-size: 0.85rem;
   }
 
   .v2pd-card-body {
-    padding: 20px 20px 24px;
-    max-height: 60vh;
+    padding: 18px 16px 22px;
+    max-height: none;
+    gap: 20px;
+  }
+
+  .v2pd-section-text {
+    font-size: 0.82rem;
+  }
+
+  .v2pd-tag {
+    font-size: 0.72rem;
+    padding: 4px 11px;
+  }
+
+  .v2pd-achievements li {
+    font-size: 0.8rem;
+  }
+
+  .v2pd-link-btn {
+    padding: 9px 16px;
+    font-size: 0.8rem;
   }
 
   .v2pd-close-btn {
     top: 12px;
-    right: 14px;
-    width: 36px;
-    height: 36px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .v2pd-close-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .v2pd-backdrop {
+    padding: 8px 6px;
+  }
+
+  .v2pd-card {
+    border-radius: 12px;
+  }
+
+  .v2pd-card-header {
+    padding: 20px 14px 16px;
+  }
+
+  .v2pd-card-title {
+    font-size: 1.15rem;
+  }
+
+  .v2pd-card-body {
+    padding: 14px 14px 18px;
+    gap: 16px;
+  }
+
+  .v2pd-tags {
+    gap: 6px;
+  }
+
+  .v2pd-tag {
+    font-size: 0.68rem;
+    padding: 3px 9px;
+  }
+
+  .v2pd-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .v2pd-link-btn {
+    justify-content: center;
+    width: 100%;
   }
 }

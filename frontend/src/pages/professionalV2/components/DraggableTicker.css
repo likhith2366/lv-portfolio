@@ -113,3 +113,28 @@
     width: 50px;
   }
 }
+
+@media (max-width: 480px) {
+  .dticker-section {
+    padding: 16px 0;
+  }
+
+  .dticker-item {
+    padding: 8px 14px;
+    gap: 6px;
+    border-radius: 40px;
+  }
+
+  .dticker-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .dticker-label {
+    font-size: 11px;
+  }
+
+  .dticker-fade {
+    width: 30px;
+  }
+}

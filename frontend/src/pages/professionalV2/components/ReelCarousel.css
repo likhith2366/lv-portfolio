@@ -22,3 +22,15 @@
   object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
 }
+
+@media (max-width: 768px) {
+  .reel-carousel {
+    height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .reel-carousel {
+    height: 140px;
+  }
+}

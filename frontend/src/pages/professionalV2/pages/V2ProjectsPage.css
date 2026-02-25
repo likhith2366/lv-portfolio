@@ -189,3 +189,41 @@
     margin-top: -140px;
   }
 }
+
+@media (max-width: 480px) {
+  .v2p-hero {
+    padding: 100px 16px 20px;
+  }
+
+  .v2p-title {
+    font-size: 1.7rem;
+  }
+
+  .v2p-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .v2p-row-label {
+    font-size: 0.9rem;
+  }
+
+  .v2p-carousel-viewport {
+    height: 320px;
+  }
+
+  .v2p-carousel-card {
+    width: 160px;
+    height: 230px;
+    margin-left: -80px;
+    margin-top: -115px;
+    border-radius: 12px;
+  }
+
+  .v2p-carousel-name {
+    font-size: 0.9rem;
+  }
+
+  .v2p-carousel-cat {
+    font-size: 0.5rem;
+  }
+}

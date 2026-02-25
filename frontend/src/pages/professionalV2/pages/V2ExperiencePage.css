@@ -271,3 +271,63 @@
     padding: 20px;
   }
 }
+
+@media (max-width: 480px) {
+  .v2e-hero {
+    padding: 100px 16px 30px;
+  }
+
+  .v2e-title {
+    font-size: 1.7rem;
+  }
+
+  .v2e-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .v2e-timeline-container {
+    padding: 0 12px 40px;
+  }
+
+  .v2e-timeline-line {
+    left: 16px;
+  }
+
+  .v2e-timeline-item--left,
+  .v2e-timeline-item--right {
+    padding-left: 48px;
+  }
+
+  .v2e-timeline-dot {
+    left: 16px;
+    width: 30px;
+    height: 30px;
+    font-size: 0.75rem;
+  }
+
+  .v2e-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .v2e-card-title {
+    font-size: 1.1rem;
+  }
+
+  .v2e-card-company {
+    font-size: 0.85rem;
+  }
+
+  .v2e-card-desc li {
+    font-size: 0.78rem;
+  }
+
+  .v2e-tech-tag {
+    font-size: 0.6rem;
+    padding: 2px 8px;
+  }
+
+  .v2e-timeline-item {
+    margin-bottom: 32px;
+  }
+}
